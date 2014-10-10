@@ -34,7 +34,8 @@
   				if(window.fulldata){
   					var lower = +d3.select("#lowerbound").attr('value')
 					var upper = +d3.select("#upperbound").attr('value')
-	  				refreshData(window.fulldata.slice(lower, upperbound))
+					console.log(lower, upper)
+	  				refreshData(window.fulldata.slice(lower, upper))
   				}
   			}
 
