@@ -24,6 +24,6 @@ _testmain.go
 *.prof
 
 .MacOSX
-
+.DS_Store
 #Ignore shared folder of jodebox on Ethan's machine
 jode_updated_201410
