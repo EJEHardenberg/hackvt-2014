@@ -8,9 +8,9 @@
 		<div id="wind"></div>
 		<div>
 			<label for="lowerbound">Lower Bound</label>
-			<input type="range" id="lowerbound" value="0">
+			<input type="range" id="lowerbound">
 			<label for="upperbound">UpperBound</label>
-			<input type="range" id="upperbound" value="13177">
+			<input type="range" id="upperbound">
 		</div>
 
 		<script type="text/javascript" src="libs/d3.min.js"></script>
@@ -26,18 +26,29 @@
 			var width = 700
 			var height = 400
 
+			var lower = 0
+			var upper = 13177
+
     		var svg = d3.select("#wind").append("svg:svg")
 			  	.attr("width", width)
   				.attr("height", height)
 
   			var up = function(){
   				if(window.fulldata){
-  					var lower = +d3.select("#lowerbound").attr('value')
-					var upper = +d3.select("#upperbound").attr('value')
 					console.log(lower, upper)
 	  				refreshData(window.fulldata.slice(lower, upper))
   				}
   			}
+
+  			d3.select("#lowerbound").on("input", function() {
+  				lower = +this.value
+  				up()
+			});
+
+			d3.select("#upperbound").on("input", function() {
+  				upper = +this.value
+  				up()
+			});
 
   			function refreshData(data){
    				var y = d3.scale.linear()
