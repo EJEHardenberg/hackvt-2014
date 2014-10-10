@@ -25,9 +25,6 @@
 			var dateFn = function(d) { return format.parse(d.READING_DATE) }
 			var width = 700
 			var height = 400
-			var keyfunc = function(d){
-				return x(dateFn(d))
-			}
 
     		var svg = d3.select("#wind").append("svg:svg")
 			  	.attr("width", width)
@@ -49,6 +46,10 @@
 				var x = d3.time.scale()
 	    			.range([10, width - 20])
     				.domain(d3.extent(data, dateFn))
+
+    			var keyfunc = function(d){
+					return x(dateFn(d))
+				}
   
     			svg.selectAll("circle").transition()
     				.attr("cx", function(d) { return x(dateFn(d)) })
