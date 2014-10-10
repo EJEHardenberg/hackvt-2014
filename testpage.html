@@ -40,16 +40,8 @@
 	  				refreshData(window.fulldata.slice(lower, upperbound))
   				}
   			}
-			d3.csv(window.windgeneration, function(data, keyfunc) {
-				window.fulldata = data
-				/* Slice the data based on the bounds */
-				refreshData(data)
-   			})
 
-   			d3.select("#lowerbound").on("input", up);
-   			d3.select("#upperbound").on("input", up);
-
-   			function refreshData(data){
+  			function refreshData(data){
    				var y = d3.scale.linear()
 	    			.range([height - 20, 10])
     				.domain(d3.extent(data, amountFn))
@@ -62,7 +54,7 @@
     				.attr("cx", function(d) { return x(dateFn(d)) })
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
 
-  				svg.selectAll("circle").data(data).enter()
+  				svg.selectAll("circle").data(data, keyfunc).enter()
 	   				.append("svg:circle")
    					.attr("r", 4)
    					.attr("cx", function(d) { return x(dateFn(d)) })
@@ -72,6 +64,16 @@
    					.style("opacity", 0)
    					.remove()
    			}
+
+
+			d3.csv(window.windgeneration, function(data) {
+				window.fulldata = data
+				/* Slice the data based on the bounds */
+				refreshData(data)
+   			})
+
+   			d3.select("#lowerbound").on("input", up);
+   			d3.select("#upperbound").on("input", up);
 
 		</script>
 	</body>
