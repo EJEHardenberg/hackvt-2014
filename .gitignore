@@ -22,3 +22,6 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+#Ignore shared folder of jodebox on Ethan's machine
+jode_updated_201410
