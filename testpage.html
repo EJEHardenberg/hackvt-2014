@@ -6,6 +6,13 @@
 	<body>
 		<h1>This is a test page for playing</h1>
 		<div id="wind"></div>
+		<div>
+			<label for="lowerbound">Lower Bound</label>
+			<input type="slider" id="lowerbound" value="0">
+			<label for="upperbound"></label>
+			<input type="slider" id="upperbound" value="13177">
+		</div>
+
 		<script type="text/javascript" src="libs/d3.min.js"></script>
 		<script type="text/javascript">
 			window.base = 'http://192.168.1.119'
@@ -18,26 +25,52 @@
 			var dateFn = function(d) { return format.parse(d.READING_DATE) }
 			var width = 700
 			var height = 400
-			d3.csv(window.windgeneration, function(data) {
-				window.data = data
+			var keyfunc = function(d){
+				return x(dateFn(d))
+			}
+
+			var y = d3.scale.linear()
+	    		.range([height - 20, 10])
+    			.domain(d3.extent(data, amountFn))
+
+    		var svg = d3.select("#wind").append("svg:svg")
+			  	.attr("width", width)
+  				.attr("height", height)
+
+  			var up = function(){
+  				var lower = +d3.select("#lowerbound").attr('value')
+				var upper = +d3.select("#upperbound").attr('value')
+  				refreshData(window.fulldata.slice(lower, upperbound))
+  			}
+			d3.csv(window.windgeneration, function(data, keyfunc) {
+				window.fulldata = data
+				/* Slice the data based on the bounds */
+				up()
+   			})
+
+   			d3.select("#lowerbound").on("input", up);
+   			d3.select("#upperbound").on("input", up);
+
+   			function refreshData(data){
+   				
 				var x = d3.time.scale()
 	    			.range([10, width - 20])
     				.domain(d3.extent(data, dateFn))
-
-    			var y = d3.scale.linear()
-	    			.range([height - 20, 10])
-    				.domain(d3.extent(data, amountFn))
   
-    			var svg = d3.select("#wind").append("svg:svg")
-			  		.attr("width", width)
-  					.attr("height", height)
+    			svg.selectAll("circle").transition()
+    				.attr("cx", function(d) { return x(dateFn(d)) })
+   					.attr("cy", function(d) { return y(amountFn(d)) }) 
 
   				svg.selectAll("circle").data(data).enter()
 	   				.append("svg:circle")
    					.attr("r", 4)
    					.attr("cx", function(d) { return x(dateFn(d)) })
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
-   			})
+
+   				svg.selectAll("circle").transition()
+   					.style("opacity", 0)
+   					.remove()
+   			}
 
 		</script>
 	</body>
