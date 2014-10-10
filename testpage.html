@@ -55,13 +55,15 @@
     				.attr("cx", function(d) { return x(dateFn(d)) })
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
 
-  				svg.selectAll("circle").data(data, keyfunc).enter()
+  				var datums = svg.selectAll("circle").data(data, keyfunc)
+
+  				datums.enter()
 	   				.append("svg:circle")
    					.attr("r", 4)
    					.attr("cx", function(d) { return x(dateFn(d)) })
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
 
-   				svg.selectAll("circle").exit().transition()
+   				datums.exit().transition()
    					.style("opacity", 0)
    					.remove()
    			}
