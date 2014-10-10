@@ -79,6 +79,7 @@
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
 
    				datums.exit().transition()
+   					.attr("r",0)
    					.style("opacity", 0)
    					.remove()
    			}
