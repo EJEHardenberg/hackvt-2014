@@ -35,3 +35,9 @@ For extra fun, edit your commit hook to push automatically:
 
 Then `chmod +x` it and be happy.
 
+If you don't want to be asked for your password everytime, try using
+this:
+ 
+     ssh-copy-id root@<server vm IP address>
+
+
