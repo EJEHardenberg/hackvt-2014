@@ -29,10 +29,6 @@
 				return x(dateFn(d))
 			}
 
-			var y = d3.scale.linear()
-	    		.range([height - 20, 10])
-    			.domain(d3.extent(data, amountFn))
-
     		var svg = d3.select("#wind").append("svg:svg")
 			  	.attr("width", width)
   				.attr("height", height)
@@ -52,6 +48,9 @@
    			d3.select("#upperbound").on("input", up);
 
    			function refreshData(data){
+   				var y = d3.scale.linear()
+	    			.range([height - 20, 10])
+    				.domain(d3.extent(data, amountFn))
    				
 				var x = d3.time.scale()
 	    			.range([10, width - 20])
