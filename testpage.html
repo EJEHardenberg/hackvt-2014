@@ -13,7 +13,7 @@
 			window.dataurl = window.base = datadir
 			window.windgeneration = window.dataurl  + 'wind-generation.csv'
 
-			var format = d3.time.format("%a %b %d %Y")
+			var format = d3.time.format("%m-%d-%Y %H:%M:%S")
 			var amountFn = function(d) { return +d.MWH_READING }
 			var dateFn = function(d) { return format.parse(d.READING_DATE) }
 
