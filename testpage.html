@@ -16,8 +16,8 @@
 			var format = d3.time.format("%m-%d-%Y %H:%M:%S")
 			var amountFn = function(d) { return +d.MWH_READING }
 			var dateFn = function(d) { return format.parse(d.READING_DATE) }
-			var width = window.width
-			var height = window.height
+			var width = 700
+			var height = 400
 			d3.csv(window.windgeneration, function(data) {
 				window.data = data
 				var x = d3.time.scale()
