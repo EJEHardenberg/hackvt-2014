@@ -43,7 +43,7 @@
 			d3.csv(window.windgeneration, function(data, keyfunc) {
 				window.fulldata = data
 				/* Slice the data based on the bounds */
-				refreshData(window.fulldata)
+				refreshData(data)
    			})
 
    			d3.select("#lowerbound").on("input", up);
