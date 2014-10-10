@@ -1,4 +1,28 @@
+.profile_nest{
+	float: left;
+}
+
+.profile_img{
+	width:90px;
+}
+
+.profile_title{
+	display: inline-block;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#myModal{
+	width: 30%;
+	background-color: #eee;
+}
+
+
+
 /* Styles for signup panels */
+
+
+
 .auth-plain {
   padding-right: 0px;
   padding-left: 0px;
