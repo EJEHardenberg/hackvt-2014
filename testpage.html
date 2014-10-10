@@ -72,6 +72,8 @@
 
   				datums.enter()
 	   				.append("svg:circle")
+	   				.attr("r",0)
+	   				.transition()
    					.attr("r", 4)
    					.attr("cx", function(d) { return x(dateFn(d)) })
    					.attr("cy", function(d) { return y(amountFn(d)) }) 
