@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    svg {
+        font: 10px sans-serif;
+        display: inline;
+    }
+    
+    .key path {
+        display: none;
+    }
+
+    .key line {
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .key text {
+        font-size: 10px;
+    }
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+    // Set window height + width
+    var width = 500,
+        height = 650;
+
+    // Define map projection
+    var projection = d3.geo.transverseMercator()
+        .rotate([72.57, -44.20])
+        .translate([175,185])
+        .scale([12000]);
+
+    // Define path generator
+    var path = d3.geo.path()
+        .projection(projection);
+
+    // Create SVG Element
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // // Define scale to sort data values into color buckets
+    // var color = d3.scale.threshold()
+    //     .domain([10, 200, 1000, 2000, 5000, 10000, 20000, 40000, 50000])
+    //     .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+
+    // Legend Stuff
+
+    // var y = d3.scale.sqrt()
+    //     .domain([0, 50000])
+    //     .range([0,325]);
+
+    // var yAxis = d3.svg.axis()
+    //     .scale(y)
+    //     .tickValues(color.domain())
+    //     .orient("right");
+
+    d3.json("json/vermont.json", function(error, vt) {
+      // if (error) return console.error(error);
+      // svg.append("path")
+      //     .datum(topojson.feature(vermont, vermont.objects.vt_towns))
+      //     .attr("d", d3.geo.path().projection(d3.geo.mercator()));
+        var vermont = topojson.feature(vt, vt.objects.vt_towns);
+
+        svg.append("path")
+            .datum(vermont)
+            .attr("d", path)
+            .style("stroke", "#777")
+            .style("stroke-width", "1");
+
+
+        // var g = svg.append("g")
+        //     .attr("class", "key")
+        //     .attr("transform", "translate(320, 165)")
+        //     .call(yAxis);
+    });
+
+
+</script>
