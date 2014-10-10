@@ -34,9 +34,11 @@
   				.attr("height", height)
 
   			var up = function(){
-  				var lower = +d3.select("#lowerbound").attr('value')
-				var upper = +d3.select("#upperbound").attr('value')
-  				refreshData(window.fulldata.slice(lower, upperbound))
+  				if(window.fulldata){
+  					var lower = +d3.select("#lowerbound").attr('value')
+					var upper = +d3.select("#upperbound").attr('value')
+	  				refreshData(window.fulldata.slice(lower, upperbound))
+  				}
   			}
 			d3.csv(window.windgeneration, function(data, keyfunc) {
 				window.fulldata = data
