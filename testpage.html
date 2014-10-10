@@ -8,9 +8,9 @@
 		<div id="wind"></div>
 		<div>
 			<label for="lowerbound">Lower Bound</label>
-			<input type="slider" id="lowerbound" value="0">
-			<label for="upperbound"></label>
-			<input type="slider" id="upperbound" value="13177">
+			<input type="range" id="lowerbound" value="0">
+			<label for="upperbound">UpperBound</label>
+			<input type="range" id="upperbound" value="13177">
 		</div>
 
 		<script type="text/javascript" src="libs/d3.min.js"></script>
@@ -43,7 +43,7 @@
 			d3.csv(window.windgeneration, function(data, keyfunc) {
 				window.fulldata = data
 				/* Slice the data based on the bounds */
-				up()
+				refreshData(window.fulldata)
    			})
 
    			d3.select("#lowerbound").on("input", up);
