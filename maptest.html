@@ -8,7 +8,7 @@
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
             <input type="text" id="town-search" placeholder="Search Town">
-            <button name="hideshow">CLICKME</button>
+            <button name="hideshow">Hide PowerPlants</button>
             <div id="legend"></div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
@@ -108,15 +108,25 @@
             var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
                     return (d && d['Plant Code'])
                 })
+
+            var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
                     console.info('Populate with data when Anders is done', d)
                 })
+                .on("mouseover", function(d){
+                    var color = color(d['Aggregate Fuel Type'])
+                    var tmp = color
+                    color = color + color
+                    color = color.replace(tmp, 'fff')
+                    d3.select(this).style('fill', color)
+                })
+                .on("mouseout", fillPowerPlant)
                 .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
-                .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
+                .style("fill", fillPowerPlant)
                 .attr("r", 0)
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
