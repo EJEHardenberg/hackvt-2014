@@ -106,8 +106,21 @@
         .attr("width", width)
         .attr("height", height);
 
+    var fuelCodes = ['HYC','NUC','PET','SUN','WAS','WND','WWW']
+
+    var fuelColorLabels = d3.scale.ordinal().domain(fuelCodes)
+        .range([
+            'Water at a Conventional Hydroelectric Turbine',
+            'Nuclear Fission (Uranium, Plutonium, Thorium)',
+            'Petroleum',
+            'Solar PV and thermal',
+            '',
+            'Wind',
+            'Wood and Wood Waste'
+            ])
+
     // Define scale to sort data values into color buckets
-    var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+    var color = d3.scale.ordinal().domain(fuelCodes)
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
     //Hurray Global State
@@ -121,7 +134,7 @@
             .attr("width", 0)
             .transition().duration(animationDuration)
             .attr("width", "20px")
-            .text(function(d){ return d })
+            .text(function(d){ return d + " " + fuelColorLabels(d) })
 
 
     d3.json("json/vermont.json", function(error, vt) {
