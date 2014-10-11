@@ -80,7 +80,7 @@
     $(document).foundation();
     // Set window height + width
     var width = 500,
-        height = 800,
+        height = 600,
         circleRadius = 7,
         animationDuration = 1200;
 
@@ -93,8 +93,8 @@
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,270])
-        .scale([17000]);
+        .translate([250,200])
+        .scale([12000]);
 
     // Define path generator
     var path = d3.geo.path()
