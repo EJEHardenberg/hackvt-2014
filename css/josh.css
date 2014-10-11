@@ -23,7 +23,7 @@
 	border: solid 1px #ccc;
 	background: #eee;
 	float: right;
-	margin-top: 0px;
+	margin-top: 0px;	
 	padding: 5px;
 	display: inline-block;
 }
@@ -51,19 +51,19 @@
 .house_data{
 	width: 95%;
 	PADDING: 5PX;
-	border: solid 1px #eee;
+	border-bottom: solid 1px #eee;
 }
 
 .house_icon{
 	float:right;
 	height: 35px;
-	margin-top: 0px;
+	margin-top: 0px;;
 	display: inline-block;
 }
 
 .energy_data{
 	width: 95%;
-	border: solid 1px #eee;
+	border-bottom: solid 1px #eee;
 }
 
 
