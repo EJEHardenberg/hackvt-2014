@@ -9,23 +9,6 @@
     <script src="js/modernizr.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/foundation.min.js"></script>
-
-    <style>
-        .start {
-            fill: none;
-            stroke: brown;
-        }
-
-        .end {
-            fill: none;
-            stroke: steelblue;
-        }
-
-        .row{
-            max-width: 100%;
-        }
-    </style>
-
 </head>
 <body>
     <div class="row container">
@@ -50,25 +33,19 @@
             </div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
-            <div class="map"></div>
+            <div class="map"></div> 
         </div>
     </div>
     <div>
-    <!--<script src="libs/d3.min.js"></script>-->
-        <script src="js/d3.v3.min.js"></script>
+    <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
-     <script src="js/d3.hexbin.v0.min.js"></script>
 <script>
     $(document).foundation();
     // Set window height + width
-    var width = 2000,
-        height = 1600,
+    var width = 500,
+        height = 800,
         circleRadius = 5,
         animationDuration = 1200;
-
-    var start = [225, 165, 1470],
-//    var start = [322, 226, 1470],
-        end = [400, 100, 100];
 
     var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
     var statusText = d3.select("span[name=status]")
@@ -77,12 +54,8 @@
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([450,270])
+        .translate([250,270])
         .scale([17000]);
-
-    var coords = projection(start);
-    console.log("coords: ");
-    console.log(coords);
 
     // Define path generator
     var path = d3.geo.path()
@@ -92,9 +65,6 @@
     var svg = d3.select("#map-container .map").append("svg")
         .attr("width", width)
         .attr("height", height);
-
-
-
 
     // Define scale to sort data values into color buckets
     var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
@@ -114,21 +84,12 @@
             .text(function(d){ return d })
 
 
-    var zoom = d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoomed);
-
-    function zoomed() {
-        svg.attr("transform",
-                        "translate(" + zoom.translate() + ")" +
-                        "scale(" + zoom.scale() + ")"
-        );
-    }
-
     d3.json("json/vermont.json", function(error, vt) {
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
         svg.append("path")
             .datum(vermont)
             .attr("d", path)
-            .style("stroke", "#000")
+            .style("stroke", "#eee")
             .style("stroke-width", "1")
             .style("fill", "#eee")
         
@@ -138,33 +99,11 @@
                 .attr("d", path)
                 .classed("town", true)
                 .on("click", function(d){
-                    console.log('zooooooooooom');
-
-                    var xy = d3.mouse(this);
-                    transition(svg, start, end);
+                    console.log('zooooooooooom')
                 })
                 
 
     });
-
-    function transition(svg, start, end) {
-        var center = [width / 10, height / 10],
-                i = d3.interpolateZoom(start, end);
-
-        console.log("height: "+height+", width: "+width+", start: "+start+", end: "+end);
-
-        svg.attr("transform", transform(start))
-                .transition()
-                .delay(2)
-                .duration(animationDuration)
-                .attrTween("transform", function() { return function(t) { return transform(i(t)); }; });
-//                .each("end", function() { d3.select(this).call(transition, end, start); });
-
-        function transform(p) {
-            var k = height / p[2];
-            return "translate(" + (center[0] - p[0] * k) + "," + (center[1] - p[1] * k) + ")scale(" + k + ")";
-        }
-    }
 
 
 </script>

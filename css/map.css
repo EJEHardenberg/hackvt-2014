@@ -1,5 +1,5 @@
 body{
-     background-image: url('../images/background.jpg');
+    background-color:  #113f00;
 }
 
 svg {
@@ -33,9 +33,6 @@ circle{
 
 .container {
     margin-top: 2em;
-    border-color: #005A31;
-    border-width: 5px;
-    background-color: #fff;
 }
 
 /* TOWNS */
@@ -51,10 +48,6 @@ circle{
     fill: #509e2f;
 }
 
-.tab {
-    width: 50%;
-}
-
 /* LEGEND STUFF*/
 .legend-powerstation-percent {
     height:2em;
@@ -63,15 +56,7 @@ circle{
 }
 
 
-
 line{
     fill: none;
     stroke: black;
-}
-.sidepanel {
-    border: ;
-}
-
-.row {
-    max-width:80rem;
 }

@@ -55,7 +55,7 @@
 }
 
 .data_block{
-	min-height: 100px;
+	height: 120px;
 	margin: auto;
 	float: left;	
 }
