@@ -50,7 +50,7 @@
                                 630.12
                             </p>
 
-                            <h5><strong>Households that generate power:</strong></h5>
+                            <h5><strong>Of Households that generate power:</strong></h5>
                             <p>
                                 <strong>Average KWH Consumed Per Month</strong>
                                 <br />
@@ -199,10 +199,13 @@
                     }
                 })
                 .on("click", function(d){
-                    console.log('zooooooooooom')
-                    var coords = d3.mouse(this)
-                    var town = d.properties.town
-                    magicZoomeyNess(town, coords)
+
+                    if(showingConsumption){
+                        console.log('zooooooooooom')
+                        var coords = d3.mouse(this)
+                        var town = d.properties.town
+                        magicZoomeyNess(town, coords)
+                    }
                 })
 
                 function magicZoomeyNess(town, coords){
