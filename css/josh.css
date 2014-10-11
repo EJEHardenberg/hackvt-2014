@@ -223,19 +223,16 @@ ul{
 }
 
 #showJosh{
-    margin-top: 1.8em;
+
+    margin: auto;
     cursor: pointer;
-    position: fixed;
-    z-index: 900;
-    top: 0px;
-    left: 40%;
-    height: 45px;
+    padding: 7px 0px 7px 0px;
     width: 320px;
     text-align: center;
     font-weight: bold;
     font-size: 1.3em;
-    -webkit-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
     background: #1e5799; /* Old browsers */
     background: -moz-linear-gradient(top, #1e5799 0%, #6a9ec9 0%, #82b0d6 71%, #8db5d6 87%, #a9cbe5 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(0%,#6a9ec9), color-stop(71%,#82b0d6), color-stop(87%,#8db5d6), color-stop(100%,#a9cbe5)); /* Chrome,Safari4+ */
@@ -257,7 +254,6 @@ ul{
     background: -ms-linear-gradient(top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* IE10+ */
     background: linear-gradient(to bottom, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
-    copy
 
 }
 
@@ -276,6 +272,11 @@ ul{
 
 .reveal-modal{
 	background-color: rgba(255,0,0,0.0);
+}
+
+.reveal-modal-bg{
+    background-color: rgba(0,0,0,0.7);
+
 }
 
 /* Styles for signup panels */

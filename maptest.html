@@ -45,7 +45,7 @@
             </dl>
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
-                    <h2>Energy Generators</h2>
+                    <h2>Power Plants</h2>
                     <div id="legend"></div>
                     <div id="data">
                         <span name="status"></span>
@@ -95,7 +95,7 @@
         <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
             <h2 class="town-name">Montpelier</h2>
            <div class="pieContainer chartContainer">
-                <div class="pieTitle">Home Heating Fuels By Type</div>
+                <div class="pieTitle" style="margin-left: -6px">Home Heating Fuels By Type</div>
                 <div id="fuel-pie"></div>
             </div>
             <div id="showJosh">View Sample Households</div>
@@ -106,7 +106,7 @@
 
                 <div id="powerplantChart"></div>
             <!--</div>-->
-                <img id="montpelier" src="images/montpelier.png" style="display: none" />
+                <img id="montpelier" src="images/montpelier2.png" style="display: none" />
         </div>
     </div>
 
@@ -511,6 +511,7 @@
                 .on("click", function(d){
                     var town = d.properties.town;
                     if(showingConsumption){
+                        town = "montpelier"
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
                         d3.select(this)
@@ -734,7 +735,7 @@
         ]);
 
         var options = {
-            title: 'Power Consumption And Generation',
+            title: 'Overall Power Consumption And Generation',
             vAxis:{
                 logScale: true
 

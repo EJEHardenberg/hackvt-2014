@@ -33,9 +33,10 @@ circle{
 
 .container {
     margin-top: 2em;
-    border-color: #005A31;
-    border-width: 5px;
+    border: solid 2px #999;
     background-color: #fff;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 /* TOWNS */
