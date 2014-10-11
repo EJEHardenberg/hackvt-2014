@@ -192,7 +192,6 @@
                                 for (var i = repData.reports.length - 1; i >= 0; i--) {
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
-                                        var j = i 
                                         window.loadedReportData[d.id].push(seriesReports.series)
                                         console.log(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
