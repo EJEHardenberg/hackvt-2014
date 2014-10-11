@@ -7,28 +7,20 @@
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="/maptest.html"></script>
-<script>
 
+<script>
+    function getProjectionForPoint(x, y){
+        return d3.geo.transverseMercator()
+                .rotate([72.57, -44.30])
+                .translate([x,y])
+                .scale([240000]);
+    }
     // Set window height + width
     var width = 500,
             height = 650;
-
+    var center
     // Define map projection
-    var projection = d3.geo.transverseMercator()
-            .rotate([72.57, -44.30])
-            .translate([175,185])
-            .scale([240000]);
-
-    // Define path generator
-    var path = d3.geo.path()
-            .projection(projection)
-            ;
-
-    // Create SVG Element
-    var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height);
+    var projection
 
 
     d3.json("json/vermont.json", function(error, vt) {
@@ -40,19 +32,37 @@
                     montpelier = feature
                 }
             })
+        projection = d3.geo.transverseMercator()
+                .rotate([72.57, -44.30])
+                .translate([175,185])
+                .scale([240000]);
+
+        var path = d3.geo.path()
+                        .projection(projection)
+
+                ;
+
+        // Define path generator
+
+
+        // Create SVG Element
+        var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
         svg.append("path")
                 .datum(montpelier)
                 .attr("d", path)
                 .style("stroke", "#777")
                 .style("stroke-width", "1")
-                .style("fill","#ccc");
+                .style("fill","#ccc")
+                ;
 
 
-        // var g = svg.append("g")
-        //     .attr("class", "key")
-        //     .attr("transform", "translate(320, 165)")
-        //     .call(yAxis);
+
+
     });
 
 
 </script>
+<script src="js/view2.js"></script>
