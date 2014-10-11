@@ -345,7 +345,7 @@
         .scale(reportY)
         .orient("left");
     var line = d3.svg.line()
-        .x(function(d) { return reportX( parseDate(d[0])); })
+        .x(function(d) { return reportX( parseDate(d[0].substring(0,3))); })
         .y(function(d) { 
             console.log(d[1], reportY(d[1]));
             return reportY(d[1]); })
@@ -368,7 +368,7 @@
 
             chartBase.selectAll(".oldreportcharts").remove() //remove any old
             
-            reportX.domain(d3.extent(datum.data, function(d) { return parseDate(d[0]); }));
+            reportX.domain(d3.extent(datum.data, function(d) { return parseDate(d[0].substring(0,3)); }));
             reportY.domain(d3.extent(datum.data, function(d) { return d[1]; }));
 
             chartBase.append("g")
