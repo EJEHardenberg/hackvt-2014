@@ -118,6 +118,9 @@
                 .attr("r", 0)
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
+                .on('click', function(d){
+                    console.info('Populate with data when Anders is done', d)
+                })
 
 
             var showing = true
