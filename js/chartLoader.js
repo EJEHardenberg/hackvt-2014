@@ -978,14 +978,22 @@ function setGraphToOutageOverTime(){
         ["2014-09-17",89]
     ])
     var options = {
-        title: 'Outages over Time',
-        vAxis:{
-            logScale: log
-        }
+        title: 'Outages over Time'
+
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('powerplantChart'));
     chart.draw(data, options);
+    google.visualization.events.addListener(chart, 'select', function(){
+        var index = chart.getSelection()[0];
+        var string = data.getValue(index.row, 0)
+        var re = new RegExp('-', 'g');
+
+        string = string.replace(re, '');
+        if(string) {
+            window.open("http://www.spc.noaa.gov/exper/archive/event.php?date=" + string)
+        }
+    })
 
 
 }
