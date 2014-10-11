@@ -21,6 +21,7 @@
     }
 </style>
 <body>
+    <button name="hideshow">CLICKME</button>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script>
@@ -67,13 +68,44 @@
       //     .datum(topojson.feature(vermont, vermont.objects.vt_towns))
       //     .attr("d", d3.geo.path().projection(d3.geo.mercator()));
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
-
         svg.append("path")
             .datum(vermont)
             .attr("d", path)
-            .style("stroke", "#000")
+            .style("stroke", "#eee")
             .style("stroke-width", "1")
             .style("fill", "#eee")
+        
+        svg.selectAll(".subunit")
+                .data(topojson.feature(vt, vt.objects.vt_towns).features)
+            .enter().append("path")
+                .attr("d", path)
+                .style("fill", "#eee")
+                .on("mouseover", function(d) {
+                    var xPosition = d3.mouse(this)[0];
+                    var yPosition = d3.mouse(this)[1] - 30;
+
+                    svg.append("text")
+                        .attr("id", "tooltip")
+                        .attr("x", xPosition)
+                        .attr("y", yPosition)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("font-weight", "bold")
+                        .attr("fill", "black")
+                        .text(d.properties.town);
+
+                    d3.select(this)
+                    .style("fill", "#509e2f");
+                })
+                .on("mouseout", function(d) {
+                    d3.select("#tooltip").remove();
+
+                    d3.select(this)
+                    .transition()
+                    .duration(250)
+                    .style("fill", "#eee")
+                })
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
@@ -82,9 +114,6 @@
             var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
                     return (d && d['Plant Code'])
                 })
-
-            window.yo = plants
-            window.d = powerplants.DATA
             
             bound.enter()
                 .append("circle")
@@ -95,8 +124,24 @@
                 .attr("r", 0)
                 .transition().duration(1000)
                 .attr("r", 10)
+
+
+            var showing = true
+            var circles = d3.selectAll("circle")
+            d3.select("[name=hideshow]").on("click", function(){
+                if(showing){
+                    circles.attr("r",10).transition().attr("r",0)
+                }else{
+                    circles.attr("r",0).transition().attr("r",10)
+                }
+                showing = !showing
+            })
+
+
                 
         })
+
+
 
 
         // var g = svg.append("g")
