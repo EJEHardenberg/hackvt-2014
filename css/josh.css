@@ -1,4 +1,56 @@
+.user_profile{
+	width: 40%;
+	background-color: #ddd;
+	border: solid 2px #333;
+	display: inline-block;
+	height: 450px;
+	padding: 5px;
+}
+
+.user_profile_spacer{
+	width: 9%;
+	display:inline-block;
+}
+
+.row-spacer{
+	height: 20px;
+}
+
+.profile_nest{
+
+}
+
+.profile_img{
+	width:90px;
+	margin-right: 15px;
+}	
+
+.profile_title{
+	display: inline-block;
+	font-size: 25px;
+	text-align: right;
+	font-weight: bold;
+}
+
+#myModal{
+	box-shadow: none;
+	border: 0px;
+	width: 80%;
+	/* background-color: #eee; */
+	display: block; -webkit-transform-origin: 0px 0px; 
+	opacity: 1; 
+	-webkit-transform: scale(1, 1); 
+	visibility: visible; top: 100px;
+}
+
+.reveal-modal{
+	background-color: rgba(255,0,0,0.0);
+}
+
 /* Styles for signup panels */
+
+
+
 .auth-plain {
   padding-right: 0px;
   padding-left: 0px;

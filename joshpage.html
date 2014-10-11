@@ -1,5 +1,6 @@
 <html>
 <head>
+
 <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
 	<script src="js/jquery-2.1.1.js"></script>
@@ -16,41 +17,53 @@
 </head>
 
 <body>
-<div id="test"></div>
 
+<a href="#" id="reveal_button" data-reveal-id="myModal" class="button" style="display: none">Launch Signup Modal</a>
 
-<a href="#" data-reveal-id="myModal" class="button">Launch Signup Modal</a>
+<div id="myModal" class="reveal-modal remove-whitespace " data-reveal="myModal" >
+	<div class="row">
+		<div class="user_profile">
+    			<div>
+				<div class="profile_nest">
+					<img class="profile_img" style="display: inline-block" src="images/profiles/usher.png"/>
+					<div class="profile_title">Max Headroom</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="user_profile_spacer"></div>	
+		<div class="user_profile">
+    			<div>
+				<div class="profile_nest">
+					<img class="profile_img" style="display: inline-block" src="images/profiles/angelina.png"/>
+					<div class="profile_title">Emelia Pitt</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row row-spacer"></div>
 
-<div id="myModal" class="reveal-modal remove-whitespace open" data-reveal="myModal" style="display: block; -webkit-transform-origin: 0px 0px; opacity: 1; -webkit-transform: scale(1, 1); visibility: visible; top: 100px;">
-<div class="row">
-    <div class="large-6 columns auth-plain">
-      <div class="signup-panel left-solid">
-        <p class="welcome">Registered Users</p>
-        <form>
-          <div class="row collapse">
-            <div class="small-2  columns">
-              <span class="prefix"><i class="fi-torso-female"></i></span>
-            </div>
-            <div class="small-10  columns">
-              <input type="text" placeholder="username">
-            </div>
-          </div>
-          <div class="row collapse">
-            <div class="small-2 columns ">
-              <span class="prefix"><i class="fi-lock"></i></span>
-            </div>
-            <div class="small-10 columns ">
-              <input type="text" placeholder="password">
-            </div>
-          </div>
-        </form>
-        <a href="#" class="button ">Log In </a>
-      </div>
-    </div>
-
-
-   </div>   
-  <a class="close-reveal-modal">×</a>
+	<div class="row">
+		<div class="user_profile">
+    			<div>
+				<div class="profile_nest">
+					<img class="profile_img" style="display: inline-block" src="images/profiles/willie.png"/>
+					<div class="profile_title">Willie Relaxo</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="user_profile_spacer"></div>	
+		<div class="user_profile">
+    			<div>
+				<div class="profile_nest">
+					<img class="profile_img" style="display: inline-block" src="images/profiles/jimmy.png"/>
+					<div class="profile_title">Jimmy Keylargo</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 
 
