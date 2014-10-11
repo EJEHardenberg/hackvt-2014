@@ -30,9 +30,6 @@ function drawDots(){
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
             .append("circle")
-            .attr("r", function(d) {
-                return +d["max_consumed"]
-            })
             .attr("cx", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[0]
             })
@@ -40,7 +37,12 @@ function drawDots(){
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
             .attr("transform", function(d){
-                return "translate(" + (d.cx*zoomVar.xAdj) +","+ (d.cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+                var cx = d3.select(this).attr("cx")
+                var cy = d3.select(this).attr("cy")
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+            })
+            .attr("r", function(d) {
+                return +d["max_consumed"]
             })
             .style('fill','url(#gradient)')
     })
@@ -82,6 +84,11 @@ function drawMoreDots(){
             })
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
+            })
+            .attr("transform", function(d){
+                var cx = d3.select(this).attr("cx")
+                var cy = d3.select(this).attr("cy")
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
             })
             .style('fill','url(#gradient2)')
     })
