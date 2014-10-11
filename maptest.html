@@ -3,13 +3,27 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
+
+
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>
 </head>
 <body>
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
-            <input type="text" id="town-search" placeholder="Search Town">
-            <button name="hideshow">CLICKME</button>
-            <div id="legend"></div>
+            <dl class="tabs" data-tab>
+                <dd class="active"><a href="#generation-panel">Generation</a></dd>
+                <dd><a href="#consumption-panel">Consumption</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div id="generation-panel" class="content active">
+                    <div id="legend"></div>
+                </div>
+                <div id="consumption-panel" class="content">
+                    <input type="text" id="town-search" placeholder="Search Town">
+                    <button name="hideshow">CLICKME</button>
+                </div>
+            </div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div> 
@@ -17,8 +31,6 @@
     </div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/foundation.min.js"></script>  
 <script>
 
     // Set window height + width
