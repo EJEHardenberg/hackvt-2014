@@ -158,8 +158,8 @@
         chartselect[0][0].onchange = function(){
             var val = this.options[this.selectedIndex]
             var datum = d3.select(val).data()[0]
-
-            reportX.domain(d3.extent(datum.data, function(d) { return d[0]; }));
+            console.log(datum, datum.data)
+            reportX.domain(d3.extent(datum.data, function(d) { console.log(d); return d[0]; }));
             reportY.domain(d3.extent(datum.data, function(d) { return d[1]; }));
 
             chartBase.append("g")
