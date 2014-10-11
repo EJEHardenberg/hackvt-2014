@@ -513,15 +513,17 @@
                     }
                 })
                 .on("click", function(d){
-
+                    var town = d.properties.town;
+                    console.log("hellllo");
+                    drawChart(town);
                     if(showingConsumption){
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
-                        var town = d.properties.town
                         d3.select(this)
                                 .classed("town-zoom", true);
                         magicZoomeyNess(town, coords)
                         drawDots();
+
                     }
                 })
 
@@ -565,6 +567,9 @@
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
+                        console.log("dddd");
+                        console.log(d['Plant Name']);
+                        drawChart(d['Plant Name']);
                     if( d.id in window.reportData){
                         statusText
                             .text("Loading Power Plant data...")
