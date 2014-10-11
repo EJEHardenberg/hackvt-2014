@@ -314,6 +314,12 @@
         .translate([250,230])
         .scale([15000]);
 
+    var zoomVar = {
+        "xAdj": 18.5,
+        "yAdj": 18.25,
+        "scale": 20
+
+    }
 
     // Define path generator
     var path = d3.geo.path()
@@ -511,7 +517,7 @@
                         .attr("transform", function(d){
                             if(d && d.properties){
                                 if(town == d.properties.town){
-                                    return "translate(" + (-coords[0]*18.5) +","+ (-coords[1]*18.25)+") scale(20)"
+                                    return "translate(" + (-coords[0]*zoomVar.xAdj) +","+ (-coords[1]*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
                                 }
                             }
                             return "scale(.3)"
