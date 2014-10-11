@@ -664,6 +664,7 @@
                 showingConsumption = true;
                 d3.selectAll(".town-outline").style("stroke", "#555");
                 circles.attr("r",circleRadius).transition().attr("r",0)
+                setGraphToOutageOverTime()
             })
 
 
