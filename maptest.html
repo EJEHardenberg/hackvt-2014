@@ -199,7 +199,7 @@
                             <img class="persona" src="images/persona.png"/>
                         </div>
                     </div>
-                    <div class="energy_data data_block">
+                     <div class="energy_data data_block">
                         <ul style="margin-top: 4px;" class="house_details_list details_list">
                             <li><span class="li-title">Adults</span>1 - Full-Time</li>
                             <li><span class="li-title">Pets</span>0</li>
@@ -495,7 +495,7 @@
                         .attr("transform", function(d){
                             if(d && d.properties){
                                 if(town == d.properties.town){
-                                    return "translate(" + (-coords[0]/2) +","+ (-coords[1]/2)+") scale(2)"
+                                    return "translate(" + (-coords[0]*19) +","+ (-coords[1]*18.5)+") scale(20)"
                                 }
                             }
                             return "scale(.1)"
