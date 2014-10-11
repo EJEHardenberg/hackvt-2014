@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
 </head>
 <body>
-    <div id="map-container"></div>
-    <div id="legend"></div>
-    <div id="left-column">
-        <input type="text" id="town-search" />
-        <button name="hideshow">CLICKME</button>
+    <div class="row container">
+         <div class="small-12 large-3 large-push-9 columns">
+            <input type="text" id="town-search" />
+            <button name="hideshow">CLICKME</button>
+        </div>
+        <div id="map-container" class="small-12 large-9 large-pull-3 columns">
+            <div class="map"></div>
+            <div id="legend"></div>
+        </div>
     </div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
-    <script src="js/jquery-2.1.1.js"></script>   
-    </div>    
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>  
 <script>
 
     // Set window height + width
@@ -34,7 +39,7 @@
         .projection(projection);
 
     // Create SVG Element
-    var svg = d3.select("#map-container").append("svg")
+    var svg = d3.select("#map-container .map").append("svg")
         .attr("width", width)
         .attr("height", height);
 
