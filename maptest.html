@@ -115,6 +115,7 @@
                 .append("circle")
                 .on('click', function(d){
                     console.info('Populate with data when Anders is done', d)
+                    //http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID HERE>
                 })
                 .on("mouseover", function(d){
                     var plantColor = color(d['Aggregate Fuel Type'])
@@ -123,7 +124,9 @@
                     plantColor = plantColor.replace(tmp, 'fff')
                     d3.select(this).style('fill', plantColor)
                 })
-                .on("mouseout", fillPowerPlant)
+                .on("mouseout", function(d){
+                    d3.select(this).style('fill', fillPowerPlant(d))
+                })
                 .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
                 .style("fill", fillPowerPlant)
