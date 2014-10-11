@@ -456,6 +456,7 @@
         svg.append("path")
             .datum(vermont)
             .attr("d", path)
+            .classed("town-outline", true)
             .style("stroke", "#eee")
             .style("stroke-width", "1")
             .style("fill", "#eee")
@@ -644,11 +645,13 @@
             d3.select("#generation-tab").on("click", function(){
                 if(!showingConsumption){return}
                 showingConsumption = false;
+                d3.selectAll(".town-outline").style("stroke", "#eee");
                 circles.attr("r",0).transition().attr("r",circleRadius)
             })
             d3.select("#consumption-tab").on("click", function(){
                 if(showingConsumption){return}
                 showingConsumption = true;
+                d3.selectAll(".town-outline").style("stroke", "#000");
                 circles.attr("r",circleRadius).transition().attr("r",0)
             })
 
