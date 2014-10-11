@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<head>
-    <!--<meta charset="utf-8">-->
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<head xmlns="http://www.w3.org/1999/html">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -143,9 +146,6 @@
                         </ul>
                     </div>
                 </div>
-
-
-
                 <div class="trendline_nest">
                     <img src="images/trendline_user1.png"/>
                 </div>
@@ -213,7 +213,7 @@
                             <img class="persona" src="images/persona.png"/>
                         </div>
                     </div>
-                    <div class="energy_data data_block">
+                     <div class="energy_data data_block">
                         <ul style="margin-top: 4px;" class="house_details_list details_list">
                             <li><span class="li-title">Adults</span>1 - Full-Time</li>
                             <li><span class="li-title">Pets</span>0</li>
@@ -293,6 +293,7 @@
 
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
+    <script src="js/view2.js"></script>
 <script>
     $(document).foundation();
     // Set window height + width
@@ -312,6 +313,7 @@
         .rotate([72.57, -44.20])
         .translate([250,230])
         .scale([15000]);
+
 
     // Define path generator
     var path = d3.geo.path()
@@ -342,7 +344,7 @@
 
     /*  For parsing out the series data from power plant reports */ 
     var margin = {top: 20, right: 20, bottom: 30, left: 50}
-    var reportChartWidth = 300 - margin.left - margin.right
+    var reportChartWidth = 500 - margin.left - margin.right
     var reportChartHeigh = 300 - margin.top - margin.bottom
     var parseDate = d3.time.format("%Y").parse
     var reportX = d3.time.scale()
@@ -356,7 +358,7 @@
         .scale(reportY)
         .orient("left");
     var line = d3.svg.line()
-        .x(function(d) { return reportX( parseDate(d[0])); })
+        .x(function(d) { return reportX( parseDate(d[0].substring(0,3))); })
         .y(function(d) { 
             console.log(d[1], reportY(d[1]));
             return reportY(d[1]); })
@@ -379,7 +381,7 @@
 
             chartBase.selectAll(".oldreportcharts").remove() //remove any old
             
-            reportX.domain(d3.extent(datum.data, function(d) { return parseDate(d[0]); }));
+            reportX.domain(d3.extent(datum.data, function(d) { return parseDate(d[0].substring(0,3)); }));
             reportY.domain(d3.extent(datum.data, function(d) { return d[1]; }));
 
             chartBase.append("g")
@@ -494,10 +496,13 @@
                     }
                 })
                 .on("click", function(d){
-                    console.log('zooooooooooom')
-                    var coords = d3.mouse(this)
-                    var town = d.properties.town
-                    magicZoomeyNess(town, coords)
+
+                    if(showingConsumption){
+                        console.log('zooooooooooom')
+                        var coords = d3.mouse(this)
+                        var town = d.properties.town
+                        magicZoomeyNess(town, coords)
+                    }
                 })
 
                 function magicZoomeyNess(town, coords){
@@ -506,7 +511,7 @@
                         .attr("transform", function(d){
                             if(d && d.properties){
                                 if(town == d.properties.town){
-                                    return "translate(" + (-coords[0]/2) +","+ (-coords[1]/2)+") scale(2)"
+                                    return "translate(" + (-coords[0]*19) +","+ (-coords[1]*18.5)+") scale(20)"
                                 }
                             }
                             return "scale(.1)"
@@ -525,6 +530,8 @@
         })
 
         /* Load powerplants */
+
+
         d3.json("powerplant.json", function(error, powerplants){
             var plants = d3.select("#svgmap").append("g")
 
@@ -548,7 +555,7 @@
                             .style("opacity", "1")
 
 
-                        var repData = reportData[d.id] 
+                        var repData = reportData[d.id]
                         if(d.id in window.loadedReportData){
                             loadingBar.style("display","none")
                             statusText.text("")
@@ -641,6 +648,7 @@
 
                 
         })
+
 
         var paths = svg.selectAll("path")
         d3.select("#town-search").on("keyup", function(){
