@@ -48,10 +48,9 @@
 
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
-        .enter()
-            .append("div")
-            .classed("legend-powerstation-percent", true)
+        .enter().append("div")
             .style("background-color", function(d){ return color(d)})
+            .style("height", "1em")
             .attr("width", 0)
             .transition().duration(animationDuration)
             .attr("width", "20px")
@@ -118,11 +117,11 @@
                     console.info('Populate with data when Anders is done', d)
                 })
                 .on("mouseover", function(d){
-                    var color = color(d['Aggregate Fuel Type'])
-                    var tmp = color
-                    color = color + color
-                    color = color.replace(tmp, 'fff')
-                    d3.select(this).style('fill', color)
+                    var plantColor = color(d['Aggregate Fuel Type'])
+                    var tmp = plantColor
+                    plantColor = plantColor + plantColor
+                    plantColor = plantColor.replace(tmp, 'fff')
+                    d3.select(this).style('fill', plantColor)
                 })
                 .on("mouseout", fillPowerPlant)
                 .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
