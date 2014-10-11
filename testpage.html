@@ -19,6 +19,7 @@
 			window.datadir = '/data/'
 			window.dataurl = window.base = datadir
 			window.windgeneration = window.dataurl  + 'wind-generation.csv'
+			return
 
 			var format = d3.time.format("%m-%d-%Y %H:%M:%S")
 			var amountFn = function(d) { return +d.MWH_READING }
