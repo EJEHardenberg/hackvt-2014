@@ -651,7 +651,7 @@
             d3.select("#consumption-tab").on("click", function(){
                 if(showingConsumption){return}
                 showingConsumption = true;
-                d3.selectAll(".town-outline").style("stroke", "#000");
+                d3.selectAll(".town-outline").style("stroke", "#555");
                 circles.attr("r",circleRadius).transition().attr("r",0)
             })
 
