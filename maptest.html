@@ -147,8 +147,24 @@
                         .style('fill', plantColor)
                         .transition().duration(animationDuration/2)
                         .attr("r", circleRadius*3)
+
+                    var xPosition = d3.mouse(this)[0];
+                    var yPosition = d3.mouse(this)[1] + 30;
+
+                    svg.append("text")
+                        .attr("id", "tooltip")
+                        .attr("x", xPosition)
+                        .attr("y", yPosition)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("font-weight", "bold")
+                        .attr("fill", "black")
+                        .text(d['Plant Name']);
+
                 })
                 .on("mouseout", function(d){
+                    d3.select("#tooltip").remove()
                     d3.select(this)
                         .style('fill', fillPowerPlant(d))
                         .transition().duration(animationDuration/2)
