@@ -15,12 +15,15 @@ circle{
     cursor: pointer;
 }
 
+
+
 .key path {
     display: none;
 }
 
 .key line {
     stroke: #000;
+    fill: none;
     shape-rendering: crispEdges;
 }
 
@@ -50,4 +53,10 @@ circle{
     height:2em;
     font-size: 1em;
     padding: .25em 0 .5em .5em;
+}
+
+
+line{
+    fill: none;
+    stroke: black;
 }
