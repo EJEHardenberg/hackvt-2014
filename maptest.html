@@ -291,6 +291,7 @@
     </div>
 
 
+    
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
     <script src="js/view2.js"></script>
@@ -508,6 +509,7 @@
                         var coords = d3.mouse(this)
                         var town = d.properties.town
                         magicZoomeyNess(town, coords)
+                        drawDots();
                     }
                 })
 

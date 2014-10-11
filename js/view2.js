@@ -2,7 +2,7 @@
 
 
 
-setTimeout(function(){
+function drawDots(){
     var gradient = d3.select("svg").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient")
@@ -39,12 +39,16 @@ setTimeout(function(){
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
+            .attr("transform", function(d){
+                return "translate(" + (d.cx*zoomVar.xAdj) +","+ (d.cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+            })
             .style('fill','url(#gradient)')
     })
-}, 1000)
+    drawMoreDots();
+}
 
 
-setTimeout(function(){
+function drawMoreDots(){
     var gradient = d3.select("svg").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient2")
@@ -81,5 +85,5 @@ setTimeout(function(){
             })
             .style('fill','url(#gradient2)')
     })
-}, 1000)
+}
 
