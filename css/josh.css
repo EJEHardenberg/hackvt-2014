@@ -30,7 +30,7 @@
 	position: relative;
 	z-index: 90;
 	border: solid 1px #ccc;
-	margin-top: -20px;
+	margin-top: -30px;
 
 }
 
@@ -60,7 +60,7 @@
 }
 
 .data_block{
-	min-height: 100px;
+	min-height: 80px;
 	margin: auto;
 	float: left;	
 }
@@ -152,7 +152,8 @@ ul{
     -webkit-transform-origin: 0px 0px;
 	opacity: 1; 
 	-webkit-transform: scale(1, 1); 
-	visibility: visible; top: 100px;
+	visibility: visible;
+    top: 0px;
 }
 
 .reveal-modal{
