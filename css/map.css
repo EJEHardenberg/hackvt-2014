@@ -63,7 +63,9 @@ circle{
 }
 
 
-
+#legend svg{
+    height: 160px;
+}
 line{
     fill: none;
     stroke: black;
