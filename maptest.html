@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
+
+    <script src="js/modernizr.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>
 </head>
 <body>
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
-            <input type="text" id="town-search" placeholder="Search Town">
-            <button name="hideshow">Hide PowerPlants</button>
-            <div id="legend"></div>
+            <dl class="tabs" data-tab>
+                <dd class="active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div id="generation-panel" class="content active">
+                    <div id="legend"></div>
+                </div>
+                <div id="consumption-panel" class="content">
+                    <input type="text" id="town-search" placeholder="Search Town">
+                </div>
+            </div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div> 
         </div>
     </div>
+    <div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/foundation.min.js"></script>  
 <script>
-
+    $(document).foundation();
     // Set window height + width
     var width = 500,
         height = 800,
@@ -32,7 +46,7 @@
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,250])
+        .translate([250,270])
         .scale([17000]);
 
     // Define path generator
@@ -47,6 +61,9 @@
     // Define scale to sort data values into color buckets
     var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
+
+    //Hurray Global State
+    var showingConsumption = false;
 
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
@@ -74,28 +91,32 @@
                 .attr("d", path)
                 .classed("town", true)
                 .on("mouseover", function(d) {
-                    var xPosition = d3.mouse(this)[0];
-                    var yPosition = d3.mouse(this)[1] - 30;
+                    if(showingConsumption){
+                        var xPosition = d3.mouse(this)[0];
+                        var yPosition = d3.mouse(this)[1] - 30;
 
-                    svg.append("text")
-                        .attr("id", "tooltip")
-                        .attr("x", xPosition)
-                        .attr("y", yPosition)
-                        .attr("text-anchor", "middle")
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "11px")
-                        .attr("font-weight", "bold")
-                        .attr("fill", "black")
-                        .text(d.properties.town);
+                        svg.append("text")
+                            .attr("id", "tooltip")
+                            .attr("x", xPosition)
+                            .attr("y", yPosition)
+                            .attr("text-anchor", "middle")
+                            .attr("font-family", "sans-serif")
+                            .attr("font-size", "11px")
+                            .attr("font-weight", "bold")
+                            .attr("fill", "black")
+                            .text(d.properties.town);
 
-                    d3.select(this)
-                        .classed("town-hover", true);
+                        d3.select(this)
+                            .classed("town-hover", true);
+                    }
                 })
                 .on("mouseout", function(d) {
-                    d3.select("#tooltip").remove();
+                    if(showingConsumption){
+                        d3.select("#tooltip").remove();
 
-                    d3.select(this)
-                        .classed("town-hover", false);
+                        d3.select(this)
+                            .classed("town-hover", false);
+                    }
                 })
                 .on("click", function(d){
                     console.log('zooooooooooom')
@@ -182,18 +203,17 @@
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
 
-
-
-            var showing = true
             var circles = d3.selectAll("circle")
-            d3.select("[name=hideshow]").on("click", function(){
-                if(showing){
-                    circles.attr("r",circleRadius).transition().attr("r",0)
-                }else{
-                    circles.attr("r",0).transition().attr("r",circleRadius)
-                }
-                showing = !showing
+            d3.select("#generation-tab").on("click", function(){
+                showingConsumption = false;
+                circles.attr("r",0).transition().attr("r",circleRadius)
             })
+            d3.select("#consumption-tab").on("click", function(){
+                showingConsumption = true;
+                circles.attr("r",circleRadius).transition().attr("r",0)
+            })
+
+
                 
         })
 
