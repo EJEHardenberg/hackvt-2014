@@ -156,9 +156,9 @@
         })
 
         chartselect[0][0].onchange = function(){
-            var selectThis = d3.select(this)
-            console.log(this)
-            console.log(selectThis.data())
+            var val = this.options[this.selectedIndex]
+            var datum = d3.select(val).data()
+            console.log(datum)
         }
 /*
         reportX.domain(d3.extent(data, function(d) { return d[0]; }));
