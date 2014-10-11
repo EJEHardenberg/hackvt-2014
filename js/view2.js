@@ -2,7 +2,7 @@
 
 
 
-setTimeout(function(){
+function drawDots(){
     var gradient = d3.select("svg").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient")
@@ -30,21 +30,32 @@ setTimeout(function(){
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
             .append("circle")
-            .attr("r", function(d) {
-                return +d["max_consumed"]
-            })
             .attr("cx", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[0]
             })
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
+            .attr("transform", function(d){
+                var cx = d3.select(this).attr("cx")
+                var cy = d3.select(this).attr("cy")
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+            })
+            .attr("r", function(d) {
+                return +d["max_consumed"]
+            })
             .style('fill','url(#gradient)')
+            .attr("r",0)
+            .transition()
+            .attr("r", function(d) {
+                return +d["max_consumed"]
+            })
     })
-}, 1000)
+    drawMoreDots();
+}
 
 
-setTimeout(function(){
+function drawMoreDots(){
     var gradient = d3.select("svg").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient2")
@@ -79,7 +90,12 @@ setTimeout(function(){
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
+            .attr("transform", function(d){
+                var cx = d3.select(this).attr("cx")
+                var cy = d3.select(this).attr("cy")
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+            })
             .style('fill','url(#gradient2)')
     })
-}, 1000)
+}
 

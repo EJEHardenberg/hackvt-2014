@@ -38,7 +38,7 @@
 </head>
 <body>
     <div class="row container panel">
-        <div class="small-12 large-4 large-push-8 columns">
+        <div id="sidebar-view-1" class="small-12 large-4 large-push-8 columns">
             <dl class="tabs" data-tab>
                 <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
                 <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
@@ -60,10 +60,6 @@
                             <div id="pieTitle">Total Generation by Type</div>
                             <div id="pieChart"></div>
                         </div>
-
-
-
-
                     </div>
                 </div>
                 <div id="consumption-panel" class="content">
@@ -106,6 +102,10 @@
                 </div>
             </div>
         </div>
+        <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
+            <h2 class="town-name">Montpelier</h2>
+            <button id="showJosh">View Sample Households</button>
+        </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div>
             <!--<div class="lineContainer chartContainer">-->
@@ -116,9 +116,6 @@
         </div>
     </div>
 
-
-    <button id="showJosh">show josh</button>
-    <button id="hideJosh">hide josh</button>
     <a href="#" id="reveal_button" data-reveal-id="myModal" class="button" style="display: none">Launch Signup Modal</a>
 
     <div id="myModal" class="reveal-modal remove-whitespace " data-reveal="myModal" >
@@ -304,6 +301,7 @@
     </div>
 
 
+    
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
     <script src="js/view2.js"></script>
@@ -459,12 +457,12 @@
     legend_nodes.append("circle")
                 .style("fill", function(d){ return color(d)})
                 .style('stroke', function(d){ return color(d)})
-                .attr('r', "10")
+                .attr('r', "8")
                 .attr("cx", "5")
                 .attr("cy", function(d,i){return i *20 + 2})
     
     legend_nodes.append("text")
-                .attr("x","15")
+                .attr("x","20")
                 .attr("y",function(d,i){return i*20 + 5})
                 .attr("width", "100px")
                 .text(function(d){ return d + " " + fuelColorLabels(d) })
@@ -520,7 +518,10 @@
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
                         var town = d.properties.town
+                        d3.select(this)
+                                .classed("town-zoom", true);
                         magicZoomeyNess(town, coords)
+                        drawDots();
                     }
                 })
 
@@ -535,6 +536,7 @@
                             }
                             return "scale(.3)"
                         })
+                    $('body').trigger('view-2');
                 }
 
         //To hold map for Power_STationReports
@@ -680,6 +682,17 @@
                 })
         })
 
+    });
+
+    $(document).ready(function(){
+        $('body').on('view-2', function(){
+            d3.selectAll(".town-search")
+                .classed("town-search", false);
+            $("#town-search").val("");
+            $("#sidebar-view-1").hide();
+            $("#sidebar-view-2").show();
+            showingConsumption = false;
+        });
     });
 
 
