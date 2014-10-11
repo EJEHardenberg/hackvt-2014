@@ -15,12 +15,15 @@ circle{
     cursor: pointer;
 }
 
+
+
 .key path {
     display: none;
 }
 
 .key line {
     stroke: #000;
+    fill: none;
     shape-rendering: crispEdges;
 }
 
@@ -60,6 +63,13 @@ circle{
 }
 
 
+#legend svg{
+    height: 160px;
+}
+line{
+    fill: none;
+    stroke: black;
+}
 .sidepanel {
     border: ;
 }

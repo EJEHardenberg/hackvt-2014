@@ -1,80 +1,282 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
 
-    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
-    <link rel="stylesheet" type="text/css" href="css/map.css">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--<script src="js/jquery-2.1.1.js"></script>-->
+    <!--<script src="js/d3.min.js"></script>-->
+    <!--<script src="js/foundation.min.js"></script>-->
+    <!--<script src="js/modern.js"></script>-->
     <script src="js/modernizr.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/foundation.min.js"></script>
+    <script src="js/josh.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/foundation-icons.css">
+
+
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
+    <link rel="stylesheet" type="text/css" href="css/josh.css">
+
+
 </head>
 <body>
-    <div id="parent-wrapper">
-        <div class="row container panel">
-             <div class="small-12 large-4 large-push-8 columns sidepanel">
-                <dl class="tabs" data-tab>
-                    <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
-                    <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
-                </dl>
-                <div class="tabs-content">
-                    <div id="generation-panel" class="content active">
-                        <div id="legend"></div>
-                        <div id="data">
-                            <span name="status"></span>
-                            <img name="loading" src="images/loader.gif" style="display: none">
-                            <select name="chartselect">
-                                <option>Select a Power Plant</option>
-                            </select>
-                            <svg id="powerplantchart"></svg>
-                        </div>
+    <div class="row container panel">
+        <div class="small-12 large-4 large-push-8 columns">
+            <dl class="tabs" data-tab>
+                <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div id="generation-panel" class="content active">
+                    <div id="legend"></div>
+                    <div id="data">
+                        <span name="status"></span>
+                        <img name="loading" src="images/loader.gif" style="display: none">
+                        <select name="chartselect">
+                            <option>Select a Power Plant</option>
+                        </select>
+                        <svg id="powerplantchart"></svg>
                     </div>
-                    <div id="consumption-panel" class="content">
-                        <input type="text" id="town-search" placeholder="Search Town">
-                        <div>
-                            <h5><strong>All Households:</strong></h5>
-                            <p>
-                                <strong>Average KWH Consumed Per Month</strong>
-                                <br />
-                                634.59
-                            </p>
-                            <p>
-                                <strong>Average KWH Generated Per Month</strong>
-                                <br />
-                                4.47
-                            </p>
-                            <p>
-                                <strong>Net KWH Used</strong>
-                                <br />
-                                630.12
-                            </p>
+                </div>
+                <div id="consumption-panel" class="content">
+                    <input type="text" id="town-search" placeholder="Search Town">
+                    <div>
+                        <h5><strong>All Households:</strong></h5>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            634.59
+                        </p>
+                        <p>
+                            <strong>Average KWH Generated Per Month</strong>
+                            <br />
+                            4.47
+                        </p>
+                        <p>
+                            <strong>Net KWH Used</strong>
+                            <br />
+                            630.12
+                        </p>
 
-                            <h5><strong>Of Households that generate power:</strong></h5>
-                            <p>
-                                <strong>Average KWH Consumed Per Month</strong>
-                                <br />
-                                685.51
-                            </p>
-                            <p>
-                                <strong>Average KWH Consumed Per Month</strong>
-                                <br />
-                                760.41
-                            </p>
-                            <p>
-                                <strong>Net KWH Used</strong>
-                                <br />
-                                -74.9
-                            </p>
-                        </div>
+                        <h5><strong>Households that generate power:</strong></h5>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            685.51
+                        </p>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            760.41
+                        </p>
+                        <p>
+                            <strong>Net KWH Used</strong>
+                            <br />
+                            -74.9
+                        </p>
                     </div>
                 </div>
             </div>
-            <div id="map-container" class="small-12 large-8 large-pull-4 columns">
-                <div class="map"></div> 
+        </div>
+        <div id="map-container" class="small-12 large-8 large-pull-4 columns">
+            <div class="map"></div> 
+        </div>
+    </div>
+
+
+    <button id="showJosh">show josh</button>
+    <button id="hideJosh">hide josh</button>
+    <a href="#" id="reveal_button" data-reveal-id="myModal" class="button" style="display: none">Launch Signup Modal</a>
+
+    <div id="myModal" class="reveal-modal remove-whitespace " data-reveal="myModal" >
+        <div class="row">
+            <div class="user_profile">
+                <div>
+                    <div class="profile_nest">
+                        <img class="profile_img" style="display: inline-block" src="images/profiles/usher.png"/>
+                        <div class="profile_title">Max Headroom</div>
+                    </div>
+                </div>
+
+                <div class="user_data">
+                    <div class="household_size">
+                        <div class="household_images">
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona persona_child" src="images/persona_child.png"/>
+                        </div>
+                    </div>
+                    <div class="energy_data data_block">
+                        <ul style="margin-top: 4px;" class="house_details_list details_list">
+                            <li><span class="li-title">Adults</span>2 - Full-Time</li>
+                            <li><span class="li-title">Children</span>1 - College</li>
+                            <li><span class="li-title">Pets</span>0</li>
+                        </ul>
+                    </div>
+                    <div class="house_data data_block">
+                        <div class="household_size">
+                            <img src="images/1987_house.png" class='house_icon'/>
+                        </div>
+                        <ul class="details_list">
+                            <li><span class="li-title">SQFT</span>2000</li>
+                            <li><span class="li-title">Renew</span>Solar</li>
+                            <li><span class="li-title">Heat</span>Wood (3-5 cord)</li>
+                            <li><span class="li-title"></span>Oil (300-400Gal)</li>
+                            <li><span class="li-title">Auto</span>Electric Car</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="trendline_nest">
+                    <img src="images/trendline_user1.png"/>
+                </div>
+            </div>
+
+            <div class="user_profile_spacer"></div>
+            <div class="user_profile">
+                <div>
+                    <div class="profile_nest">
+                        <img class="profile_img" style="display: inline-block" src="images/profiles/angelina.png"/>
+                        <div class="profile_title">Emelia Pitt</div>
+                    </div>
+                </div>
+
+                <div class="user_data">
+                    <div class="household_size">
+                        <div class="household_images">
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona persona_child" src="images/persona_child.png"/>
+                        </div>
+                    </div>
+                    <div class="energy_data data_block">
+                        <ul style="margin-top: 4px;" class="house_details_list details_list">
+                            <li><span class="li-title">Adults</span>1 - Full Time</li>
+                            <li><span class="li-title"></span>1 - S.A.H</li>
+                            <li><span class="li-title">Children</span>2 - Public School</li>
+                            <li><span class="li-title">Children</span>1 - Pre-School</li>
+                            <li><span class="li-title">Pets</span>0</li>
+                        </ul>
+                    </div>
+                    <div class="house_data data_block">
+                        <div class="household_size">
+                            <img src="images/1968_house.png" class='house_icon'/>
+                        </div>
+                        <ul class="details_list">
+                            <li><span class="li-title">SQFT</span>1800</li>
+                            <li><span class="li-title">Renew</span>NONE</li>
+                            <li><span class="li-title">Heat</span>Gas</li>
+                            <li><span class="li-title"></span>Electric Hot Water</li>
+                            <li><span class="li-title">Auto</span>Unknown</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trendline_nest">
+                    <img src="images/trendline_user2.png"/>
+                </div>
             </div>
         </div>
-    <div>
+        <div class="row row-spacer"></div>
+
+        <div class="row">
+            <div class="user_profile">
+                <div>
+                    <div class="profile_nest">
+                        <img class="profile_img" style="display: inline-block" src="images/profiles/willie.png"/>
+                        <div class="profile_title">Willie Relaxo</div>
+                    </div>
+                </div>
+
+                <div class="user_data">
+                    <div class="household_size">
+                        <div class="household_images">
+                            <img class="persona" src="images/persona.png"/>
+                        </div>
+                    </div>
+                    <div class="energy_data data_block">
+                        <ul style="margin-top: 4px;" class="house_details_list details_list">
+                            <li><span class="li-title">Adults</span>1 - Full-Time</li>
+                            <li><span class="li-title">Pets</span>0</li>
+                        </ul>
+                    </div>
+                    <div class="house_data data_block">
+                        <div class="household_size">
+                            <img src="images/1984_house.png" class='house_icon'/>
+                        </div>
+                        <ul class="details_list">
+                            <li><span class="li-title">SQFT</span>2000</li>
+                            <li><span class="li-title">Renew</span></li>
+                            <li><span class="li-title">Heat</span>Wood (3-5 cord)</li>
+                            <li><span class="li-title"></span>Oil (baseboard)</li>
+                            <li><span class="li-title">Auto</span>Electric Car</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trendline_nest">
+                    <img src="images/trendline_user3.png"/>
+                </div>
+            </div>
+
+            <div class="user_profile_spacer"></div>
+            <div class="user_profile">
+                <div>
+                    <div class="profile_nest">
+                        <img class="profile_img" style="display: inline-block" src="images/profiles/jimmy.png"/>
+                        <div class="profile_title">Jimmy Keylargo</div>
+                    </div>
+                </div>
+
+                <div class="user_data">
+                    <div class="household_size">
+                        <div class="household_images">
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona" src="images/persona.png"/>
+                            <img class="persona persona_child" src="images/persona_child.png"/>
+                            <img class="persona persona_child" src="images/persona_child.png"/>
+                            <img class="persona persona_child" src="images/persona_child.png"/>
+                        </div>
+                    </div>
+                    <div class="energy_data data_block">
+                        <ul style="margin-top: 4px;" class="house_details_list details_list">
+                            <li><span class="li-title">Adults</span>2 - Full-Time</li>
+                            <li><span class="li-title">Children</span>2 - Public School</li>
+                            <li><span class="li-title"></span>1 - Daycare</li>
+                            <li><span class="li-title">Pets</span>0</li>
+                        </ul>
+                    </div>
+                    <div class="house_data data_block">
+                        <div class="household_size">
+                            <img src="images/1967_house.png" class='house_icon'/>
+                        </div>
+
+                        <ul class="details_list">
+                            <li><span class="li-title">SQFT</span>2000</li>
+                            <li><span class="li-title">Renew</span>2.1kw Solar</li>
+                            <li><span class="li-title"></span>4X8 Solar Hot Water</li>
+                            <li><span class="li-title">Heat</span>Natural Gas (hydronic baseboard)</li>
+                            <li><span class="li-title">Auto</span>Unknown</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+                <div class="trendline_nest">
+                    <img src="images/trendline_user4.png"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
 <script>
@@ -89,7 +291,7 @@
     var statusText = d3.select("span[name=status]")
     var loadingBar = d3.select("img[name=loading]")
     var chartBase = d3.select("#powerplantchart")
-    var chartselect = d3.select("select[name=chartselect]")
+    var chartselect = d3.select("select[name=chartselect]").style('background-color','#eee')
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
@@ -123,6 +325,85 @@
     // Define scale to sort data values into color buckets
     var color = d3.scale.ordinal().domain(fuelCodes)
         .range(["#B71427","#118C4E","#6DBDD6","#FFE658","#FF9009","#DF3D82","#003366"]);
+
+    /*  For parsing out the series data from power plant reports */ 
+    var margin = {top: 20, right: 20, bottom: 30, left: 50}
+    var reportChartWidth = 300 - margin.left - margin.right
+    var reportChartHeigh = 300 - margin.top - margin.bottom
+    var parseDate = d3.time.format("%Y").parse
+    var reportX = d3.time.scale()
+        .range([0, reportChartWidth])
+    var reportY = d3.scale.linear()
+        .range([reportChartHeigh, 0])
+    var reportXAxis = d3.svg.axis()
+        .scale(reportX)
+        .orient("bottom");
+    var reportYAxis = d3.svg.axis()
+        .scale(reportY)
+        .orient("left");
+    var line = d3.svg.line()
+        .x(function(d) { return reportX( parseDate(d[0].substring(0,3))); })
+        .y(function(d) { 
+            console.log(d[1], reportY(d[1]));
+            return reportY(d[1]); })
+        .interpolate('linear');
+
+    chartBase
+        .attr("width", reportChartWidth + margin.left + margin.right)
+        .attr("height", reportChartHeigh + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var showData = function(id){
+        var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
+            return (d && d[0] && d[0].name) || d3.select(this).name
+        })
+
+        chartselect[0][0].onchange = function(){
+            var val = this.options[this.selectedIndex]
+            var datum = d3.select(val).data()[0][0]
+
+            chartBase.selectAll(".oldreportcharts").remove() //remove any old
+            
+            reportX.domain(d3.extent(datum.data, function(d) { return parseDate(d[0].substring(0,3)); }));
+            reportY.domain(d3.extent(datum.data, function(d) { return d[1]; }));
+
+            chartBase.append("g")
+                .attr("class", "x axis oldreportcharts")
+                .attr("transform", "translate(0," + reportChartHeigh + ")")
+                .call(reportXAxis);
+
+            chartBase.append("g")
+                .attr("class", "y axis oldreportcharts")
+                .call(reportYAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text(datum.units);
+
+            chartBase.append("path")
+                .datum(datum.data)
+                .attr("class", "line oldreportcharts")
+                .attr("d", line)
+                .style('fill','none')
+                .style('stroke','black')
+                .style('stroke-width','1.2em')
+            
+        }
+        
+        
+        boundSelect.enter().append("option")
+            .attr('value', function(d){ return d[0].name })
+            .text(function(d){ return d[0].name })
+
+        boundSelect.exit().remove()
+
+
+        chartselect[0][0].selectedIndex = 0
+    }
+
 
     //Hurray Global State
     var showingConsumption = false;
@@ -242,21 +523,6 @@
 
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
-            var showData = function(id){
-                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
-                    return (d && d[0] && d[0].name) || d3.select(this).name
-                })
-
-                
-                boundSelect.enter().append("option")
-                    .attr('value', function(d){ return d[0].name })
-                    .text(function(d){ return d[0].name })
-
-                boundSelect.exit().remove()
-
-                chartselect[0][0].selectedIndex = 0
-            }
-
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
