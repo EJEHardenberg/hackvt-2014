@@ -30,6 +30,9 @@ function drawDots(){
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
             .append("circle")
+            .attr("r", function(d) {
+                return +d["max_consumed"]
+            })
             .attr("cx", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[0]
             })
@@ -41,15 +44,10 @@ function drawDots(){
                 var cy = d3.select(this).attr("cy")
                 return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
             })
-            .attr("r", function(d) {
-                return +d["max_consumed"]
-            })
             .style('fill','url(#gradient)')
             .attr("r",0)
             .transition()
-            .attr("r", function(d) {
-                return +d["max_consumed"]
-            })
+
     })
     drawMoreDots();
 }
