@@ -21,6 +21,9 @@ setTimeout(function(){
         .attr("offset", "100%")
         .attr("stop-color", "#F66")
         .attr("stop-opacity", 1);
+
+    
+
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
         console.log(data)
         var houses = d3.select("svg").append("g")
