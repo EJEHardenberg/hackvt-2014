@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -37,6 +37,7 @@
     <div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
+    <script src="js/view2.js"></script>
 <script>
     $(document).foundation();
     // Set window height + width
@@ -54,6 +55,7 @@
         .rotate([72.57, -44.20])
         .translate([250,270])
         .scale([17000]);
+
 
     // Define path generator
     var path = d3.geo.path()
@@ -140,6 +142,8 @@
         })
 
         /* Load powerplants */
+
+
         d3.json("powerplant.json", function(error, powerplants){
             var plants = d3.select("svg").append("g")
 
@@ -148,7 +152,7 @@
                 })
 
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
-            
+
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
@@ -163,7 +167,7 @@
                             .style("opacity", "1")
 
 
-                        var repData = reportData[d.id] 
+                        var repData = reportData[d.id]
                         if(d.id in window.loadedReportData){
                             loadingBar.style("display","none")
                             statusText.text("")
@@ -174,7 +178,7 @@
                                 for (var i = repData.reports.length - 1; i >= 0; i--) {
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
-                                        var j = i 
+                                        var j = i
                                         window.loadedReportData[d.id].push(seriesReports.series)
                                         if(j == reportData.reports.length){
                                             statusText
@@ -248,8 +252,9 @@
             })
 
 
-                
+
         })
+
 
         var paths = svg.selectAll("path")
         d3.select("#town-search").on("keyup", function(){
