@@ -176,7 +176,7 @@
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
                                         var j = i 
                                         window.loadedReportData[d.id].push(seriesReports.series)
-                                        if(j == reportData.reports.length){
+                                        if(j == 0){
                                             statusText
                                                 .text("Done Loading!")
                                                 .transition().duration(animationDuration)
