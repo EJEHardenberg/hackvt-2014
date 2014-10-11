@@ -45,6 +45,7 @@
             </dl>
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
+                    <h2>Energy Generators</h2>
                     <div id="legend"></div>
                     <div id="data">
                         <span name="status"></span>
@@ -94,7 +95,7 @@
         <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
             <h2 class="town-name">Montpelier</h2>
            <div class="pieContainer chartContainer">
-                <div class="pieTitle">Home Heating Fuel</div>
+                <div class="pieTitle">Home Heating Fuels By Type</div>
                 <div id="fuel-pie"></div>
             </div>
             <div id="showJosh">View Sample Households</div>
@@ -301,6 +302,7 @@
 <script>
     $(document).foundation();
     // Set window height + width
+    var log = false
     var width = 700,
         height = 700,
         circleRadius = 7,
@@ -586,7 +588,6 @@
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
                                         window.loadedReportData[d.id].push(seriesReports.series)
-                                        console.info(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
 //                                            statusText
 //                                                .text("Done Loading!")
@@ -656,13 +657,13 @@
             d3.select("#generation-tab").on("click", function(){
                 if(!showingConsumption){return}
                 showingConsumption = false;
-                d3.selectAll(".town-outline").style("stroke", "#eee");
+                d3.selectAll(".town-outline").transition().style("stroke", "#eee");
                 circles.attr("r",0).transition().attr("r",circleRadius)
             })
             d3.select("#consumption-tab").on("click", function(){
                 if(showingConsumption){return}
                 showingConsumption = true;
-                d3.selectAll(".town-outline").style("stroke", "#555");
+                d3.selectAll(".town-outline").transition().style("stroke", "#555");
                 circles.attr("r",circleRadius).transition().attr("r",0)
             })
 
@@ -694,7 +695,7 @@
             showingConsumption = false;
         });
     });
-    function getLineGraph() {
+    function getLineGraph(log) {
 
         var consumptionData = google.visualization.arrayToDataTable([
             ['Date', 'Consumption', 'Generation'],
@@ -732,7 +733,10 @@
         ]);
 
         var options = {
-            title: 'Power Consumption And Generation'
+            title: 'Power Consumption And Generation',
+            vAxis:{
+                logScale: log
+            }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('powerplantChart'));
