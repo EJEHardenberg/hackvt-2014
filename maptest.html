@@ -11,68 +11,69 @@
     <script src="js/foundation.min.js"></script>
 </head>
 <body>
-    <div class="row container">
-         <div class="small-12 large-4 large-push-8 columns">
-            <dl class="tabs" data-tab>
-                <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
-                <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
-            </dl>
-            <div class="tabs-content">
-                <div id="generation-panel" class="content active">
-                    <div id="legend"></div>
-                    <div id="data">
-                        <span name="status"></span>
-                        <img name="loading" src="images/loader.gif" style="display: none">
-                        <select name="chartselect">
-                            <option>Select a Power Plant</option>
-                        </select>
-                        <svg id="powerplantchart"></svg>
+    <div id="parent-wrapper">
+        <div class="row container panel">
+             <div class="small-12 large-4 large-push-8 columns sidepanel">
+                <dl class="tabs" data-tab>
+                    <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                    <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+                </dl>
+                <div class="tabs-content">
+                    <div id="generation-panel" class="content active">
+                        <div id="legend"></div>
+                        <div id="data">
+                            <span name="status"></span>
+                            <img name="loading" src="images/loader.gif" style="display: none">
+                            <select name="chartselect">
+                                <option>Select a Power Plant</option>
+                            </select>
+                            <svg id="powerplantchart"></svg>
+                        </div>
                     </div>
-                </div>
-                <div id="consumption-panel" class="content">
-                    <input type="text" id="town-search" placeholder="Search Town">
-                    <div>
-                        <h5><strong>All Households:</strong></h5>
-                        <p>
-                            <strong>Average KWH Consumed Per Month</strong>
-                            <br />
-                            634.59
-                        </p>
-                        <p>
-                            <strong>Average KWH Generated Per Month</strong>
-                            <br />
-                            4.47
-                        </p>
-                        <p>
-                            <strong>Net KWH Used</strong>
-                            <br />
-                            630.12
-                        </p>
+                    <div id="consumption-panel" class="content">
+                        <input type="text" id="town-search" placeholder="Search Town">
+                        <div>
+                            <h5><strong>All Households:</strong></h5>
+                            <p>
+                                <strong>Average KWH Consumed Per Month</strong>
+                                <br />
+                                634.59
+                            </p>
+                            <p>
+                                <strong>Average KWH Generated Per Month</strong>
+                                <br />
+                                4.47
+                            </p>
+                            <p>
+                                <strong>Net KWH Used</strong>
+                                <br />
+                                630.12
+                            </p>
 
-                        <h5><strong>Households that generate power:</strong></h5>
-                        <p>
-                            <strong>Average KWH Consumed Per Month</strong>
-                            <br />
-                            685.51
-                        </p>
-                        <p>
-                            <strong>Average KWH Consumed Per Month</strong>
-                            <br />
-                            760.41
-                        </p>
-                        <p>
-                            <strong>Net KWH Used</strong>
-                            <br />
-                            -74.9
-                        </p>
+                            <h5><strong>Households that generate power:</strong></h5>
+                            <p>
+                                <strong>Average KWH Consumed Per Month</strong>
+                                <br />
+                                685.51
+                            </p>
+                            <p>
+                                <strong>Average KWH Consumed Per Month</strong>
+                                <br />
+                                760.41
+                            </p>
+                            <p>
+                                <strong>Net KWH Used</strong>
+                                <br />
+                                -74.9
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div id="map-container" class="small-12 large-8 large-pull-4 columns">
+                <div class="map"></div> 
+            </div>
         </div>
-        <div id="map-container" class="small-12 large-8 large-pull-4 columns">
-            <div class="map"></div> 
-        </div>
-    </div>
     <div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
@@ -80,7 +81,7 @@
     $(document).foundation();
     // Set window height + width
     var width = 500,
-        height = 600,
+        height = 700,
         circleRadius = 7,
         animationDuration = 1200;
 
@@ -93,8 +94,8 @@
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,200])
-        .scale([12000]);
+        .translate([250,230])
+        .scale([15000]);
 
     // Define path generator
     var path = d3.geo.path()
@@ -121,21 +122,36 @@
 
     // Define scale to sort data values into color buckets
     var color = d3.scale.ordinal().domain(fuelCodes)
-        .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
+        .range(["#B71427","#118C4E","#6DBDD6","#FFE658","#FF9009","#DF3D82","#003366"]);
 
     //Hurray Global State
     var showingConsumption = false;
 
     // Legend Stuff
-    d3.select("#legend").selectAll("div").data(color.domain())
-        .enter().append("div")
-            .classed(".legend-powerstation-percent", true)
-            .style("background-color", function(d){ return color(d)})
-            .attr("width", 0)
-            .transition().duration(animationDuration)
-            .attr("width", "20px")
-            .text(function(d){ return d + " " + fuelColorLabels(d) })
+    var legends = d3.select("#legend").append("svg")
+        .style("padding","15px")
+        .selectAll("g").data(color.domain());
+    
+    legends.enter().append("g")
+        .classed(".legend-powerstation-percent", true)
+        .attr("width", 0)
+        .transition().duration(animationDuration)
+        .attr("width", "20px")
 
+    var legend_nodes = d3.selectAll("#legend g")
+                                
+    legend_nodes.append("circle")
+                .style("fill", function(d){ return color(d)})
+                .style('stroke', function(d){ return color(d)})
+                .attr('r', "10")
+                .attr("cx", "5")
+                .attr("cy", function(d,i){return i *20 + 2})
+    
+    legend_nodes.append("text")
+                .attr("x","15")
+                .attr("y",function(d,i){return i*20 + 5})
+                .attr("width", "100px")
+                .text(function(d){ return d + " " + fuelColorLabels(d) })
 
     d3.json("json/vermont.json", function(error, vt) {
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
