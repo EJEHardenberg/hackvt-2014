@@ -94,7 +94,7 @@
         <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
             <h2 class="town-name">Montpelier</h2>
            <div class="pieContainer chartContainer">
-                <div class="pieTitle">Home Heating Fuel</div>
+                <div class="pieTitle">Home Heating Fuels By Type</div>
                 <div id="fuel-pie"></div>
             </div>
             <button id="showJosh">View Sample Households</button>
@@ -586,7 +586,6 @@
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
                                         window.loadedReportData[d.id].push(seriesReports.series)
-                                        console.info(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
 //                                            statusText
 //                                                .text("Done Loading!")
