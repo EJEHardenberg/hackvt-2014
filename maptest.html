@@ -352,7 +352,7 @@
             '(Nuclear Fission (Uranium, Plutonium, Thorium))',
             '(Petroleum)',
             '(Solar PV and thermal)',
-            '(unknown)',
+            '(other)',
             '(Wind)',
             '(Wood and Wood Waste)'
             ])
@@ -515,11 +515,10 @@
                     }
                 })
                 .on("click", function(d){
-
+                    var town = d.properties.town;
                     if(showingConsumption){
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
-                        var town = d.properties.town
                         d3.select(this)
                                 .classed("town-zoom", true);
                         magicZoomeyNess(town, coords)
@@ -568,15 +567,18 @@
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
+                        console.log("dddd");
+                        console.log(d['Plant Name']);
+                        drawChart(d['Plant Name']);
                     if( d.id in window.reportData){
-                        statusText
-                            .text("Loading Power Plant data...")
-                            .style("color", "green")
-                        loadingBar
-                            .style("display", "block")
-                            .style("opacity", "0")
-                            .transition().duration(animationDuration)
-                            .style("opacity", "1")
+//                        statusText
+//                            .text("Loading Power Plant data...")
+//                            .style("color", "green")
+//                        loadingBar
+//                            .style("display", "block")
+//                            .style("opacity", "0")
+//                            .transition().duration(animationDuration)
+//                            .style("opacity", "1")
 
 
                         var repData = reportData[d.id]
@@ -593,22 +595,22 @@
                                         window.loadedReportData[d.id].push(seriesReports.series)
                                         console.info(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
-                                            statusText
-                                                .text("Done Loading!")
-                                                .transition().duration(animationDuration).style("opacity","0")
-                                                .text("")
-                                            loadingBar.transition().duration(animationDuration)
-                                                .style("opacity","0")
-                                                .style("display", "block")
+//                                            statusText
+//                                                .text("Done Loading!")
+//                                                .transition().duration(animationDuration).style("opacity","0")
+//                                                .text("")
+//                                            loadingBar.transition().duration(animationDuration)
+//                                                .style("opacity","0")
+//                                                .style("display", "block")
                                             showData(d.id)
                                         }
                                     })
                                 };
                             }else{
                                 loadingBar.style("display","none")
-                                statusText
-                                    .text("Power Plant has no reporting data")
-                                    .style("color", "red")
+//                                statusText
+//                                    .text("Power Plant has no reporting data")
+//                                    .style("color", "red")
                             }
                         }
                     }else{
