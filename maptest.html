@@ -60,7 +60,7 @@
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
     // Legend Stuff
-    d3.select("legend").selectAll("div").data(color.domain())
+    d3.select("#legend").selectAll("div").data(color.domain())
         .enter().append("div")
             .attr("background-color", Object)
             .attr("width", 0)
