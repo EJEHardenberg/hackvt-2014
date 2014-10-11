@@ -44,7 +44,7 @@
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,250])
+        .translate([250,270])
         .scale([17000]);
 
     // Define path generator
@@ -59,6 +59,9 @@
     // Define scale to sort data values into color buckets
     var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
+
+    //Hurray Global State
+    var showingConsumption = false;
 
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
@@ -86,28 +89,32 @@
                 .attr("d", path)
                 .classed("town", true)
                 .on("mouseover", function(d) {
-                    var xPosition = d3.mouse(this)[0];
-                    var yPosition = d3.mouse(this)[1] - 30;
+                    if(showingConsumption){
+                        var xPosition = d3.mouse(this)[0];
+                        var yPosition = d3.mouse(this)[1] - 30;
 
-                    svg.append("text")
-                        .attr("id", "tooltip")
-                        .attr("x", xPosition)
-                        .attr("y", yPosition)
-                        .attr("text-anchor", "middle")
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "11px")
-                        .attr("font-weight", "bold")
-                        .attr("fill", "black")
-                        .text(d.properties.town);
+                        svg.append("text")
+                            .attr("id", "tooltip")
+                            .attr("x", xPosition)
+                            .attr("y", yPosition)
+                            .attr("text-anchor", "middle")
+                            .attr("font-family", "sans-serif")
+                            .attr("font-size", "11px")
+                            .attr("font-weight", "bold")
+                            .attr("fill", "black")
+                            .text(d.properties.town);
 
-                    d3.select(this)
-                        .classed("town-hover", true);
+                        d3.select(this)
+                            .classed("town-hover", true);
+                    }
                 })
                 .on("mouseout", function(d) {
-                    d3.select("#tooltip").remove();
+                    if(showingConsumption){
+                        d3.select("#tooltip").remove();
 
-                    d3.select(this)
-                        .classed("town-hover", false);
+                        d3.select(this)
+                            .classed("town-hover", false);
+                    }
                 })
                 .on("click", function(d){
                     console.log('hico')
@@ -156,9 +163,11 @@
 
             var circles = d3.selectAll("circle")
             d3.select("#generation-tab").on("click", function(){
+                showingConsumption = false;
                 circles.attr("r",0).transition().attr("r",circleRadius)
             })
             d3.select("#consumption-tab").on("click", function(){
+                showingConsumption = true;
                 circles.attr("r",circleRadius).transition().attr("r",0)
             })
 
