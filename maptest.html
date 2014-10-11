@@ -145,11 +145,10 @@
         var paths = svg.selectAll("path")
         d3.select("#town-search").on("keyup", function(){
             var townName = this.value
-            console.log(townName)
             paths.style("fill", function(d){
                     if(d && d.properties){
                         var dTown = d.properties.town
-                        if( dTown.toLowerCase().indexOf(townName.toLowerCase()) == -1 && townName.length != 0){
+                        if( dTown.toLowerCase().indexOf(townName.toLowerCase()) == -1 || townName.trim().length == 0){
                             return '#eee'
                         }else{
                             return '#f00'
