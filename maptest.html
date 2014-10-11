@@ -347,7 +347,7 @@
             '(Nuclear Fission (Uranium, Plutonium, Thorium))',
             '(Petroleum)',
             '(Solar PV and thermal)',
-            '(unknown)',
+            '(other)',
             '(Wind)',
             '(Wood and Wood Waste)'
             ])
@@ -511,8 +511,6 @@
                 })
                 .on("click", function(d){
                     var town = d.properties.town;
-                    console.log("hellllo");
-                    drawChart(town);
                     if(showingConsumption){
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
