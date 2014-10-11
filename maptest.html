@@ -157,12 +157,14 @@
             var showData = function(id){
                 var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id])
 
+                
+                boundSelect.enter().append("option")
+                    .attr('value', function(d){ return d[0].name })
+                    .text(function(d){ return d[0].name })
+
                 boundSelect.exit().remove()
 
-                boundSelect.enter().append("option")
-                    .attr('value', function(d){ return d.name })
-                    .text(function(d){ console.log(d[0]); return d[0].name })
-
+                chartselect[0][0].selectedIndex = 0
             }
 
             bound.enter()
