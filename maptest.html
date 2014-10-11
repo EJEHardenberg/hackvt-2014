@@ -180,7 +180,7 @@
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
                                             statusText
                                                 .text("Done Loading!")
-                                                .transition().duration(animationDuration)
+                                                .transition().duration(animationDuration).style("opacity","0")
                                                 .text("")
                                             loadingBar.transition().duration(animationDuration)
                                                 .style("opacity","0")
