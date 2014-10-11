@@ -39,7 +39,7 @@ function drawDots(){
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
             .attr("transform", function(d){
-                return "translate(100,100)"
+                return "translate(155,185)"
             })
             .attr("r", function(d) {
                 return +d["max_consumed"]
