@@ -1,28 +1,8 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-    svg {
-        font: 10px sans-serif;
-        display: inline;
-    }
-
-    path{
-        cursor: pointer;
-    }
-    
-    .key path {
-        display: none;
-    }
-
-    .key line {
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-
-    .key text {
-        font-size: 10px;
-    }
-</style>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
+</head>
 <body>
     <div id="map-container"></div>
     <div id="legend"></div>
@@ -32,12 +12,15 @@
     </div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>   
     </div>    
 <script>
 
     // Set window height + width
     var width = 500,
-        height = 650;
+        height = 650,
+        circleRadius = 5;
+
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
@@ -87,7 +70,7 @@
                 .data(topojson.feature(vt, vt.objects.vt_towns).features)
             .enter().append("path")
                 .attr("d", path)
-                .style("fill", "#eee")
+                .classed("town", true)
                 .on("mouseover", function(d) {
                     var xPosition = d3.mouse(this)[0];
                     var yPosition = d3.mouse(this)[1] - 30;
@@ -104,13 +87,13 @@
                         .text(d.properties.town);
 
                     d3.select(this)
-                    .style("fill", "#509e2f");
+                        .classed("town-hover", true);
                 })
                 .on("mouseout", function(d) {
                     d3.select("#tooltip").remove();
 
                     d3.select(this)
-                    .style("fill", "#eee")
+                        .classed("town-hover", false);
                 })
 
         /* Load powerplants */
@@ -129,16 +112,16 @@
                 .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
                 .attr("r", 0)
                 .transition().duration(1000)
-                .attr("r", 10)
+                .attr("r", circleRadius)
 
 
             var showing = true
             var circles = d3.selectAll("circle")
             d3.select("[name=hideshow]").on("click", function(){
                 if(showing){
-                    circles.attr("r",10).transition().attr("r",0)
+                    circles.attr("r",circleRadius).transition().attr("r",0)
                 }else{
-                    circles.attr("r",0).transition().attr("r",10)
+                    circles.attr("r",0).transition().attr("r",circleRadius)
                 }
                 showing = !showing
             })
@@ -148,20 +131,13 @@
         var paths = svg.selectAll("path")
         d3.select("#town-search").on("keyup", function(){
             var townName = this.value
-            paths.style("fill", function(d){
+            paths.classed("town-search", function(d){
                     if(d && d.properties){
                         var dTown = d.properties.town
-                        if( dTown.toLowerCase().indexOf(townName.toLowerCase()) == -1 || townName.trim().length == 0){
-                            return '#eee'
-                        }else{
-                            return '#f00'
-                        }
+                        return (dTown.substring(0, townName.length).toLowerCase() == townName.toLowerCase() && townName.trim().length != 0)
                     }
                 })
         })
-
-    
-
 
         // var g = svg.append("g")
         //     .attr("class", "key")

@@ -8,8 +8,8 @@
 }
 
 .user_data{
-	height: 70%;
-	width: 95%;
+	height: 80%;
+	width: 97%;
 	background: #fff;
 	margin: auto;
 	position: relative;
@@ -19,6 +19,27 @@
 
 }
 
+.household_size{
+	float: left;
+	margin-top: 20px;
+	padding: 5px;
+	display: inline-block;
+}
+
+.household_size h5{
+	display: inline;
+}
+
+.household_images{
+	display: inline;
+}
+
+
+.household_size img{
+	height: 25px;
+	display: inline-block;
+}
+
 .user_profile_spacer{
 	width: 9%;
 	display:inline-block;
@@ -26,6 +47,22 @@
 
 .row-spacer{
 	height: 20px;
+}
+
+.trendline_nest{
+	display: inline-block;
+	height: 10%;
+	padding-left: 5%;
+	float: left;
+	width: 100%;
+	margin-top: -90px;
+}
+
+.trendline_nest img{
+	position: relative;
+	z-index: 91; 
+	width: 95%;
+	margin: auto;
 }
 
 .profile_nest{
