@@ -1,3 +1,8 @@
+
+#joshpage{
+    display: none;
+}
+
 .user_profile{
 	width: 40%;
 	background-color: #ddd;
@@ -25,7 +30,7 @@
 	position: relative;
 	z-index: 90;
 	border: solid 1px #ccc;
-	margin-top: -20px;
+	margin-top: -30px;
 
 }
 
@@ -55,7 +60,7 @@
 }
 
 .data_block{
-	min-height: 100px;
+	min-height: 80px;
 	margin: auto;
 	float: left;	
 }
@@ -143,10 +148,12 @@ ul{
 	border: 0px;
 	width: 80%;
 	/* background-color: #eee; */
-	display: block; -webkit-transform-origin: 0px 0px; 
+	display: none;
+    -webkit-transform-origin: 0px 0px;
 	opacity: 1; 
 	-webkit-transform: scale(1, 1); 
-	visibility: visible; top: 100px;
+	visibility: visible;
+    top: 0px;
 }
 
 .reveal-modal{
