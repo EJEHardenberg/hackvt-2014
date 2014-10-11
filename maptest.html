@@ -96,10 +96,15 @@
                         .classed("town-hover", false);
                 })
                 .on("click", function(d){
-                    console.log('hico')
+                    console.log('zooooooooooom')
                 })
 
-
+        window.reportData = {}
+        d3.json("Power_Station_Reports.json", function(error, reportData){
+            for (var i = reportData.length - 1; i >= 0; i--) {
+                window.reportData[reportData[i].id] = reportData[i]
+            };
+        })
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
@@ -115,6 +120,9 @@
                 .append("circle")
                 .on('click', function(d){
                     console.info('Populate with data when Anders is done', d)
+                    if( d.id in window.reportData){
+                        console.log('DO A THING')
+                    }
                     //http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID HERE>
                 })
                 .on("mouseover", function(d){
