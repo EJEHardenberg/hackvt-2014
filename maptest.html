@@ -23,6 +23,8 @@
                     <div id="data">
                         <span name="status"></span>
                         <img name="loading" src="images/loader.gif" style="display: none">
+                        <select></select>
+                        <svg></svg>
                     </div>
                 </div>
                 <div id="consumption-panel" class="content">
@@ -149,6 +151,10 @@
 
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
+            var showData = function(id){
+
+            }
+
             bound.enter()
                 .append("circle")
                 .on('click', function(d){

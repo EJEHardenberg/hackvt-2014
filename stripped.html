@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
+
+    <script src="js/modernizr.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>
+</head>
+<body>
+    <div class="row container">
+         <div class="small-12 large-4 large-push-8 columns">
+            <dl class="tabs" data-tab>
+                <dd class="active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div id="generation-panel" class="content active">
+                    <div id="legend"></div>
+                    <div id="data">
+                        <span name="status"></span>
+                        <img name="loading" src="images/loader.gif" style="display: none">
+                        <select></select>
+                        <svg></svg>
+                    </div>
+                </div>
+                <div id="consumption-panel" class="content">
+                    <input type="text" id="town-search" placeholder="Search Town">
+                </div>
+            </div>
+        </div>
+        <div id="map-container" class="small-12 large-8 large-pull-4 columns">
+            <div class="map"></div> 
+        </div>
+    </div>
+    <div>
+    <script src="libs/d3.min.js"></script>
+    <script src="libs/d3.topojson.min.js"></script>
+<script>
+    $(document).foundation();
+    // Set window height + width
+    var width = 500,
+        height = 800,
+        circleRadius = 5,
+        animationDuration = 1200;
+
+    var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
+    var statusText = d3.select("span[name=status]")
+    var loadingBar = d3.select("img[name=loading]")
+
+    // Define map projection
+    var projection = d3.geo.transverseMercator()
+        .rotate([72.57, -44.20])
+        .translate([250,270])
+        .scale([17000]);
+
+    // Define path generator
+    var path = d3.geo.path()
+        .projection(projection);
+
+    // Create SVG Element
+    var svg = d3.select("#map-container .map").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Define scale to sort data values into color buckets
+    var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+        .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
+
+    //Hurray Global State
+    var showingConsumption = false;
+
+    // Legend Stuff
+    d3.select("#legend").selectAll("div").data(color.domain())
+        .enter().append("div")
+            .classed(".legend-powerstation-percent", true)
+            .style("background-color", function(d){ return color(d)})
+            .attr("width", 0)
+            .transition().duration(animationDuration)
+            .attr("width", "20px")
+            .text(function(d){ return d })
+
+
+    d3.json("json/vermont.json", function(error, vt) {
+        var vermont = topojson.feature(vt, vt.objects.vt_towns);
+        svg.append("path")
+            .datum(vermont)
+            .attr("d", path)
+            .style("stroke", "#eee")
+            .style("stroke-width", "1")
+            .style("fill", "#eee")
+        
+        svg.selectAll(".subunit")
+                .data(topojson.feature(vt, vt.objects.vt_towns).features)
+            .enter().append("path")
+                .attr("d", path)
+                .classed("town", true)
+                .on("click", function(d){
+                    console.log('zooooooooooom')
+                })
+                
+        })
+
+    });
+
+
+</script>
