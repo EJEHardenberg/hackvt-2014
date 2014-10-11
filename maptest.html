@@ -511,6 +511,7 @@
                 .on("click", function(d){
                     var town = d.properties.town;
                     if(showingConsumption){
+                        town = "montpelier"
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
                         d3.select(this)
