@@ -25,9 +25,10 @@ function drawDots(){
     
 
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
+        var avgData = data
         var houses = d3.select("#svgmap").append("g").attr("id","avghouseg")
-        var bound = houses.selectAll("circle").data(data, function(d){
-            return( d && d.id) 
+        var bound = houses.selectAll("circle").data(avgData, function(d){
+            return( d && d['longitude'] + d['latitude'] +d["max_consumed"]) 
         })
         bound.enter()
             .append("circle")
@@ -53,11 +54,11 @@ function drawDots(){
             })
         bound.exit().remove()
     })
-    drawMoreDots();
+    drawMoreDots(avgData);
 }
 
 
-function drawMoreDots(){
+function drawMoreDots(data){
     var gradient = d3.select("#svgmap").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient2")
@@ -77,27 +78,26 @@ function drawMoreDots(){
         .attr("stop-color", "#9f9")
         .attr("stop-opacity", 1);
 
-    d3.csv("MonthlyAvgHouse.csv", function(error, data) {
-        console.log(data)
-        var houses = d3.select("#svgmap").append("g").attr("id", "avghouse2")
-        var bound = houses.selectAll("circle").data(data)
-        bound.enter()
-            .append("circle")
-            .attr("r", function(d) {
-                return +d["max_generated"]
-            })
-            .attr("cx", function(d) {
-                return projection([+d["longitude"], +d["latitude"]])[0]
-            })
-            .attr("cy", function(d) {
-                return projection([+d["longitude"], +d["latitude"]])[1]
-            })
-            .attr("transform", function(d){
-                var cx = d3.select(this).attr("cx")
-                var cy = d3.select(this).attr("cy")
-                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
-            })
-            .style('fill','url(#gradient2)')
+    var houses = d3.select("#svgmap").append("g").attr("id", "avghouse2")
+    var bound = houses.selectAll("circle").data(data, function(d){
+        return (d && d['longitude'] + d['latitude'] +d["max_generated"])
     })
+    bound.enter()
+        .append("circle")
+        .attr("r", function(d) {
+            return +d["max_generated"]
+        })
+        .attr("cx", function(d) {
+            return projection([+d["longitude"], +d["latitude"]])[0]
+        })
+        .attr("cy", function(d) {
+            return projection([+d["longitude"], +d["latitude"]])[1]
+        })
+        .attr("transform", function(d){
+            var cx = d3.select(this).attr("cx")
+            var cy = d3.select(this).attr("cy")
+            return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+        })
+        .style('fill','url(#gradient2)')
 }
 
