@@ -301,6 +301,7 @@
 <script>
     $(document).foundation();
     // Set window height + width
+    var log = false
     var width = 700,
         height = 700,
         circleRadius = 7,
@@ -694,7 +695,7 @@
             showingConsumption = false;
         });
     });
-    function getLineGraph() {
+    function getLineGraph(log) {
 
         var consumptionData = google.visualization.arrayToDataTable([
             ['Date', 'Consumption', 'Generation'],
@@ -732,7 +733,10 @@
         ]);
 
         var options = {
-            title: 'Power Consumption And Generation'
+            title: 'Power Consumption And Generation',
+            vAxis:{
+                logScale: log
+            }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('powerplantChart'));
