@@ -225,7 +225,7 @@ ul{
 #showJosh{
     margin-top: 1.8em;
     cursor: pointer;
-    position: fixed;
+    position: absolute;
     z-index: 900;
     top: 0px;
     left: 40%;
