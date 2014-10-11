@@ -190,7 +190,9 @@
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             var showData = function(id){
-                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id])
+                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
+                    return (d && d[0] && d[0].name) || d3.select(this).name
+                })
 
                 
                 boundSelect.enter().append("option")
