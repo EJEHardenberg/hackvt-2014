@@ -2,11 +2,12 @@
 *.o
 *.a
 *.so
-
+*.swn
+*.swo
 # Folders
 _obj
 _test
-
+<CR>
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out

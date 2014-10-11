@@ -1,77 +1,64 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-    svg {
-        font: 10px sans-serif;
-        display: inline;
-    }
-    
-    .key path {
-        display: none;
-    }
-
-    .key line {
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-
-    .key text {
-        font-size: 10px;
-    }
-</style>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/map.css">
+</head>
 <body>
-    <div id="map-container"></div>
-    <div id="left-column">
-        <input type="text" id="town-search" />
-        <button name="hideshow">CLICKME</button>
+    <div class="row container">
+         <div class="small-12 large-4 large-push-8 columns">
+            <input type="text" id="town-search" placeholder="Search Town">
+            <button name="hideshow">CLICKME</button>
+            <div id="legend"></div>
+        </div>
+        <div id="map-container" class="small-12 large-8 large-pull-4 columns">
+            <div class="map"></div> 
+        </div>
     </div>
-    
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="libs/d3.min.js"></script>
+    <script src="libs/d3.topojson.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>  
 <script>
 
     // Set window height + width
     var width = 500,
-        height = 650;
+        height = 800,
+        circleRadius = 5,
+        animationDuration = 1200;
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([175,185])
-        .scale([12000]);
-        window.proje = projection
+        .translate([250,250])
+        .scale([17000]);
 
     // Define path generator
     var path = d3.geo.path()
         .projection(projection);
 
     // Create SVG Element
-    var svg = d3.select("#map-container").append("svg")
+    var svg = d3.select("#map-container .map").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-    // // Define scale to sort data values into color buckets
-    // var color = d3.scale.threshold()
-    //     .domain([10, 200, 1000, 2000, 5000, 10000, 20000, 40000, 50000])
-    //     .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+    // Define scale to sort data values into color buckets
+    var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+        .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
     // Legend Stuff
+    d3.select("#legend").selectAll("div").data(color.domain())
+        .enter()
+            .append("div")
+            .classed("legend-powerstation-percent", true)
+            .style("background-color", function(d){ return color(d)})
+            .attr("width", 0)
+            .transition().duration(animationDuration)
+            .attr("width", "20px")
+            .text(function(d){ return d })
 
-    // var y = d3.scale.sqrt()
-    //     .domain([0, 50000])
-    //     .range([0,325]);
-
-    // var yAxis = d3.svg.axis()
-    //     .scale(y)
-    //     .tickValues(color.domain())
-    //     .orient("right");
 
     d3.json("json/vermont.json", function(error, vt) {
-      // if (error) return console.error(error);
-      // svg.append("path")
-      //     .datum(topojson.feature(vermont, vermont.objects.vt_towns))
-      //     .attr("d", d3.geo.path().projection(d3.geo.mercator()));
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
         svg.append("path")
             .datum(vermont)
@@ -84,7 +71,7 @@
                 .data(topojson.feature(vt, vt.objects.vt_towns).features)
             .enter().append("path")
                 .attr("d", path)
-                .style("fill", "#eee")
+                .classed("town", true)
                 .on("mouseover", function(d) {
                     var xPosition = d3.mouse(this)[0];
                     var yPosition = d3.mouse(this)[1] - 30;
@@ -101,14 +88,19 @@
                         .text(d.properties.town);
 
                     d3.select(this)
-                    .style("fill", "#509e2f");
+                        .classed("town-hover", true);
                 })
                 .on("mouseout", function(d) {
                     d3.select("#tooltip").remove();
 
                     d3.select(this)
-                    .style("fill", "#eee")
+                        .classed("town-hover", false);
                 })
+                .on("click", function(d){
+                    console.log('hico')
+                })
+
+
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
@@ -123,34 +115,36 @@
                 .attr("cx", function(d){ 
                     return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
-                .style("fill", function(d,i){ return "#" + (""+d.id).substring(0,3)  })
+                .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
                 .attr("r", 0)
-                .transition().duration(1000)
-                .attr("r", 10)
+                .transition().duration(animationDuration)
+                .attr("r", circleRadius)
 
 
             var showing = true
             var circles = d3.selectAll("circle")
             d3.select("[name=hideshow]").on("click", function(){
                 if(showing){
-                    circles.attr("r",10).transition().attr("r",0)
+                    circles.attr("r",circleRadius).transition().attr("r",0)
                 }else{
-                    circles.attr("r",0).transition().attr("r",10)
+                    circles.attr("r",0).transition().attr("r",circleRadius)
                 }
                 showing = !showing
             })
-
-
                 
         })
 
+        var paths = svg.selectAll("path")
+        d3.select("#town-search").on("keyup", function(){
+            var townName = this.value
+            paths.classed("town-search", function(d){
+                    if(d && d.properties){
+                        var dTown = d.properties.town
+                        return (dTown.substring(0, townName.length).toLowerCase() == townName.toLowerCase() && townName.trim().length != 0)
+                    }
+                })
+        })
 
-
-
-        // var g = svg.append("g")
-        //     .attr("class", "key")
-        //     .attr("transform", "translate(320, 165)")
-        //     .call(yAxis);
     });
 
 
