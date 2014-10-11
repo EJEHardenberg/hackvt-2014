@@ -1,0 +1,18 @@
+Net generation all fuels Vermont all sectors annual
+http://www.eia.gov/beta/api/qb.cfm?category=1&sdid=ELEC.GEN.ALL-VT-99.A
+20:52:54 GMT-0400 (EDT)
+Source: Energy Information Administration
+Year,Series ID: ELEC.GEN.ALL-VT-99.A thousand megawatthours
+2013,6921.29801
+2012,6569.67011
+2011,6776.21881
+2010,6619.99
+2009,7282.34831
+2008,6820.21596
+2007,5823.58151
+2006,7084.34367
+2005,5716.75462
+2004,5470.37877
+2003,6027.962
+2002,5456.19
+2001,5480.614 
