@@ -91,30 +91,16 @@
                         .classed("town-hover", false);
                 })
                 .on("click", function(d){
+                    var coords = d3.mouse(this) //[x,y]
                     svg
                         .attr("width",width)
                         .attr("height", height)
-                    .append("g")
-                        .call(transition, [0,0,120] , d3.mouse(this) + [60])
+                        .transition().duration(1400)
+                        .attr("width", width*2)
+                        .attr("height",height*2)
                 })
 
-        function transition(svg, start, end) {
-            var center = [width / 2, height / 2],
-            i = d3.interpolateZoom(start, end);
 
-            svg
-              .attr("transform", transform(start))
-            .transition()
-              .delay(250)
-              .duration(i.duration * 2)
-              .attrTween("transform", function() { return function(t) { return transform(i(t)); }; })
-              .each("end", function() { d3.select(this).call(transition, end, start); });
-
-            function transform(p) {
-                var k = height / p[2];
-                return "translate(" + (center[0] - p[0] * k) + "," + (center[1] - p[1] * k) + ")scale(" + k + ")";
-            }
-        }
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
