@@ -155,13 +155,13 @@
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             var showData = function(id){
-                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[d.id], function(d){
-                    return (d && d.series_id) || d3.select(this).attr('id')
-                })
+                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id])
 
                 boundSelect.exit().remove()
+
                 boundSelect.enter().append("option")
-                    .text(function(d){ return d.name })
+                    .attr('value', function(d){ return d.name })
+                    .text(function(d){ console.log(d[0]); return d[0].name })
 
             }
 
