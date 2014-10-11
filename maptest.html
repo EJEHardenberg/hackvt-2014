@@ -20,6 +20,10 @@
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
                     <div id="legend"></div>
+                    <div id="data">
+                        <span name="status"></span>
+                        <img name="loading" src="images/loader.gif" style="display: none">
+                    </div>
                 </div>
                 <div id="consumption-panel" class="content">
                     <input type="text" id="town-search" placeholder="Search Town">
@@ -42,6 +46,8 @@
         animationDuration = 1200;
 
     var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
+    var statusText = d3.select("span[name=status]")
+    var loadingBar = d3.select("img[name=loading]")
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
@@ -146,23 +152,48 @@
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
-                    console.info('Populate with data when Anders is done', d)
                     if( d.id in window.reportData){
+                        statusText
+                            .text("Loading Power Plant data...")
+                            .style("color", "green")
+                        loadingBar
+                            .style("display", "block")
+                            .style("opacity", "0")
+                            .transition().duration(animationDuration)
+                            .style("opacity", "1")
+
+
                         var repData = reportData[d.id] 
                         if(d.id in window.loadedReportData){
+                            loadingBar.style("display","none")
+                            statusText.text("")
                             //do something
-                            console.log('DO IT')
                         }else{
                             if(repData && repData.reports){
                                 window.loadedReportData[d.id] = []
                                 for (var i = repData.reports.length - 1; i >= 0; i--) {
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
+                                        var j = i 
                                         window.loadedReportData[d.id].push(seriesReports.series)
+                                        if(j == reportData.reports.length){
+                                            statusText
+                                                .text("Done Loading!")
+                                                .transition().duration(animationDuration)
+                                                .text("")
+                                            loadingBar.transition().duration(animationDuration)
+                                                .style("opacity","0")
+                                                .style("display", "block")
+                                            /* Show all the data we've loaded */
+                                        }
                                     })
                                 };
                             }
                         }
+                    }else{
+                        statusText
+                            .text("Power Plant has no reporting data")
+                            .style("color", "red")
                     }
                 })
                 .on("mouseover", function(d){
