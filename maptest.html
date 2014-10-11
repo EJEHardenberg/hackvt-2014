@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
 
-
+    <script src="js/modernizr.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/foundation.min.js"></script>
 </head>
@@ -12,8 +14,8 @@
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
             <dl class="tabs" data-tab>
-                <dd class="active"><a href="#generation-panel">Generation</a></dd>
-                <dd><a href="#consumption-panel">Consumption</a></dd>
+                <dd class="active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
             </dl>
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
@@ -21,7 +23,6 @@
                 </div>
                 <div id="consumption-panel" class="content">
                     <input type="text" id="town-search" placeholder="Search Town">
-                    <button name="hideshow">Hide PowerPlants</button>
                 </div>
             </div>
         </div>
@@ -29,10 +30,11 @@
             <div class="map"></div> 
         </div>
     </div>
+    <div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
 <script>
-
+    $(document).foundation();
     // Set window height + width
     var width = 500,
         height = 800,
@@ -152,18 +154,15 @@
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
 
-
-
-            var showing = true
             var circles = d3.selectAll("circle")
-            d3.select("[name=hideshow]").on("click", function(){
-                if(showing){
-                    circles.attr("r",circleRadius).transition().attr("r",0)
-                }else{
-                    circles.attr("r",0).transition().attr("r",circleRadius)
-                }
-                showing = !showing
+            d3.select("#generation-tab").on("click", function(){
+                circles.attr("r",0).transition().attr("r",circleRadius)
             })
+            d3.select("#consumption-tab").on("click", function(){
+                circles.attr("r",circleRadius).transition().attr("r",0)
+            })
+
+
                 
         })
 
