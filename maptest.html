@@ -135,7 +135,7 @@
                             window.loadedReportData[d.id] = []
                             for (var i = repData.reports.length - 1; i >= 0; i--) {
                                 var seriesId = repData.reports[i]
-                                d3.json(reportsURL.replace("<SERIES_ID_HERE>", series_id), function(error, seriesReports){
+                                d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
                                     window.loadedReportData[d.id].push(seriesReports.series)
                                 })
                             };
