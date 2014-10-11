@@ -31,6 +31,12 @@
     margin:auto;
 }
 
+.data-headline{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 .lineContainer{
     padding-bottom: 10px;
 }
@@ -39,12 +45,41 @@
     margin-left: -45px;
 }
 
+#outages-pie{
+    margin-left: -45px;
+}
+
+.data-title{
+    font-weight: 0.9em;
+    COLOR: #777;
+    display: inline-block;
+}
+
+.data-point{
+    display: inline-block;
+}
+
+.dataset-div{
+    border: solid 1px #eee;
+    padding: 5px;
+}
+
+.redpoint{
+    font-weight: bold;
+    color: firebrick;
+}
+
+.greenpoint{
+    font-weight: bold;
+    color: green;
+}
+
 .chartContainer{
     padding-top: 20px;
     border-top: solid 3px #ddd;
 }
 
-#pieTitle{
+.pieTitle{
     position: relative;
     z-index: 90;
     width: 100%;

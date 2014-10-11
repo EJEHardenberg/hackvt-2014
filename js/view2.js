@@ -17,9 +17,5 @@ function drawDots(){
             .style("height","70%")
             .style("left","150px")
 
-        
-
-    window.image = image
-     
 }
 
