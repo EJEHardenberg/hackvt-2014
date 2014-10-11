@@ -7,6 +7,16 @@
 	padding: 5px;
 }
 
+.inline-block{
+	display: inline-block;
+}
+
+.li-title{
+	display: inline-block;
+	width: 80px;
+	font-weight: bold;
+}
+
 .user_data{
 	height: 80%;
 	width: 97%;
@@ -20,8 +30,10 @@
 }
 
 .household_size{
-	float: left;
-	margin-top: 20px;
+	border: solid 1px #ccc;
+	background: #eee;
+	float: right;
+	margin-top: 0px;	
 	padding: 5px;
 	display: inline-block;
 }
@@ -34,9 +46,43 @@
 	display: inline;
 }
 
+.persona_child{
+	height: 16px;
+}
+
+.persona{
+	height: 25px;
+}
+
+.data_block{
+	height: 120px;
+	margin: auto;
+	float: left;	
+}
+.house_data{
+	width: 95%;
+	PADDING: 5PX;
+	border-bottom: solid 1px #eee;
+}
+
+ul{
+	list-style-type: none;
+}
+
+.house_icon{
+	float:right;
+	height: 35px;
+	margin-top: 0px;;
+	display: inline-block;
+}
+
+.energy_data{
+	width: 95%;
+	border-bottom: solid 1px #eee;
+}
+
 
 .household_size img{
-	height: 25px;
 	display: inline-block;
 }
 
@@ -81,6 +127,15 @@
 	font-size: 25px;
 	text-align: right;
 	font-weight: bold;
+}
+
+.house_details_list{
+	margin-top: -35px;
+	
+}
+
+.details_list{
+	font-size: 0.8em;
 }
 
 #myModal{

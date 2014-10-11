@@ -44,7 +44,7 @@
     // Set window height + width
     var width = 500,
         height = 800,
-        circleRadius = 5,
+        circleRadius = 7,
         animationDuration = 1200;
 
     var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
@@ -244,10 +244,12 @@
 
             var circles = d3.selectAll("circle")
             d3.select("#generation-tab").on("click", function(){
+                if(!showingConsumption){return}
                 showingConsumption = false;
                 circles.attr("r",0).transition().attr("r",circleRadius)
             })
             d3.select("#consumption-tab").on("click", function(){
+                if(showingConsumption){return}
                 showingConsumption = true;
                 circles.attr("r",circleRadius).transition().attr("r",0)
             })
