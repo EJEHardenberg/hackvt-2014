@@ -1,36 +1,58 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="css/map.css">
+
+    <script src="js/modernizr.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/foundation.min.js"></script>
 </head>
 <body>
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
-            <input type="text" id="town-search" placeholder="Search Town">
-            <button name="hideshow">CLICKME</button>
-            <div id="legend"></div>
+            <dl class="tabs" data-tab>
+                <dd class="active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div id="generation-panel" class="content active">
+                    <div id="legend"></div>
+                    <div id="data">
+                        <span name="status"></span>
+                        <img name="loading" src="images/loader.gif" style="display: none">
+                    </div>
+                </div>
+                <div id="consumption-panel" class="content">
+                    <input type="text" id="town-search" placeholder="Search Town">
+                </div>
+            </div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div> 
         </div>
     </div>
+    <div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/foundation.min.js"></script>  
 <script>
-
+    $(document).foundation();
     // Set window height + width
     var width = 500,
         height = 800,
-        circleRadius = 5,
+        circleRadius = 7,
         animationDuration = 1200;
+
+    var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
+    var statusText = d3.select("span[name=status]")
+    var loadingBar = d3.select("img[name=loading]")
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,250])
+        .translate([250,270])
         .scale([17000]);
 
     // Define path generator
@@ -46,11 +68,14 @@
     var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
+    //Hurray Global State
+    var showingConsumption = false;
+
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
         .enter().append("div")
+            .classed(".legend-powerstation-percent", true)
             .style("background-color", function(d){ return color(d)})
-            .style("height", "1em")
             .attr("width", 0)
             .transition().duration(animationDuration)
             .attr("width", "20px")
@@ -72,8 +97,117 @@
                 .attr("d", path)
                 .classed("town", true)
                 .on("mouseover", function(d) {
+                    if(showingConsumption){
+                        var xPosition = d3.mouse(this)[0];
+                        var yPosition = d3.mouse(this)[1] - 30;
+
+                        svg.append("text")
+                            .attr("id", "tooltip")
+                            .attr("x", xPosition)
+                            .attr("y", yPosition)
+                            .attr("text-anchor", "middle")
+                            .attr("font-family", "sans-serif")
+                            .attr("font-size", "11px")
+                            .attr("font-weight", "bold")
+                            .attr("fill", "black")
+                            .text(d.properties.town);
+
+                        d3.select(this)
+                            .classed("town-hover", true);
+                    }
+                })
+                .on("mouseout", function(d) {
+                    if(showingConsumption){
+                        d3.select("#tooltip").remove();
+
+                        d3.select(this)
+                            .classed("town-hover", false);
+                    }
+                })
+                .on("click", function(d){
+                    console.log('zooooooooooom')
+                })
+
+        //To hold map for Power_STationReports
+        window.reportData = {}
+        //To hold data loaded from querying against the ids from Power_Station_reports
+        window.loadedReportData = {}
+
+        d3.json("Power_Station_Reports.json", function(error, reportData){
+            for (var i = reportData.length - 1; i >= 0; i--) {
+                window.reportData[reportData[i].id] = reportData[i]
+            };
+        })
+
+        /* Load powerplants */
+        d3.json("powerplant.json", function(error, powerplants){
+            var plants = d3.select("svg").append("g")
+
+            var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
+                    return (d && d['Plant Code'])
+                })
+
+            var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
+            
+            bound.enter()
+                .append("circle")
+                .on('click', function(d){
+                    if( d.id in window.reportData){
+                        statusText
+                            .text("Loading Power Plant data...")
+                            .style("color", "green")
+                        loadingBar
+                            .style("display", "block")
+                            .style("opacity", "0")
+                            .transition().duration(animationDuration)
+                            .style("opacity", "1")
+
+
+                        var repData = reportData[d.id] 
+                        if(d.id in window.loadedReportData){
+                            loadingBar.style("display","none")
+                            statusText.text("")
+                            //do something
+                        }else{
+                            if(repData && repData.reports){
+                                window.loadedReportData[d.id] = []
+                                for (var i = repData.reports.length - 1; i >= 0; i--) {
+                                    var seriesId = repData.reports[i]
+                                    d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
+                                        var j = i 
+                                        window.loadedReportData[d.id].push(seriesReports.series)
+                                        if(j == reportData.reports.length){
+                                            statusText
+                                                .text("Done Loading!")
+                                                .transition().duration(animationDuration)
+                                                .text("")
+                                            loadingBar.transition().duration(animationDuration)
+                                                .style("opacity","0")
+                                                .style("display", "block")
+                                            /* Show all the data we've loaded */
+                                        }
+                                    })
+                                };
+                            }
+                        }
+                    }else{
+                        statusText
+                            .text("Power Plant has no reporting data")
+                            .style("color", "red")
+                    }
+                })
+                .on("mouseover", function(d){
+                    var plantColor = color(d['Aggregate Fuel Type']).replace("#","")
+                    var tmp = plantColor
+                    plantColor = plantColor + plantColor
+                    plantColor = plantColor.replace(tmp, '000')
+                    d3.select(this)
+                        .style('fill', plantColor)
+                        .transition().duration(animationDuration/2)
+                        .attr("r", circleRadius*3)
+
                     var xPosition = d3.mouse(this)[0];
-                    var yPosition = d3.mouse(this)[1] - 30;
+                    var yPosition = d3.mouse(this)[1] + 30;
 
                     svg.append("text")
                         .attr("id", "tooltip")
@@ -84,52 +218,36 @@
                         .attr("font-size", "11px")
                         .attr("font-weight", "bold")
                         .attr("fill", "black")
-                        .text(d.properties.town);
+                        .text(d['Plant Name']);
 
+                })
+                .on("mouseout", function(d){
+                    d3.select("#tooltip").remove()
                     d3.select(this)
-                        .classed("town-hover", true);
+                        .style('fill', fillPowerPlant(d))
+                        .transition().duration(animationDuration/2)
+                        .attr("r", circleRadius)
                 })
-                .on("mouseout", function(d) {
-                    d3.select("#tooltip").remove();
-
-                    d3.select(this)
-                        .classed("town-hover", false);
-                })
-                .on("click", function(d){
-                    console.log('hico')
-                })
-
-
-
-        /* Load powerplants */
-        d3.json("powerplant.json", function(error, powerplants){
-            var plants = d3.select("svg").append("g")
-
-            var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
-                    return (d && d['Plant Code'])
-                })
-            
-            bound.enter()
-                .append("circle")
-                .attr("cx", function(d){ 
-                    return projection([d.lon,d.lat])[0]})
+                .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
-                .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
+                .style("fill", fillPowerPlant)
                 .attr("r", 0)
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
 
-
-            var showing = true
             var circles = d3.selectAll("circle")
-            d3.select("[name=hideshow]").on("click", function(){
-                if(showing){
-                    circles.attr("r",circleRadius).transition().attr("r",0)
-                }else{
-                    circles.attr("r",0).transition().attr("r",circleRadius)
-                }
-                showing = !showing
+            d3.select("#generation-tab").on("click", function(){
+                if(!showingConsumption){return}
+                showingConsumption = false;
+                circles.attr("r",0).transition().attr("r",circleRadius)
             })
+            d3.select("#consumption-tab").on("click", function(){
+                if(showingConsumption){return}
+                showingConsumption = true;
+                circles.attr("r",circleRadius).transition().attr("r",0)
+            })
+
+
                 
         })
 
