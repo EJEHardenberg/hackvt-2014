@@ -20,6 +20,11 @@ path{
     font-size: 10px;
 }
 
+.container {
+    margin-top: 2em;
+}
+
+/* TOWNS */
 .town {
     fill: #eee;
 }
@@ -32,6 +37,9 @@ path{
     fill: #509e2f;
 }
 
-.container {
-    margin-top: 2em;
+/* LEGEND STUFF*/
+.legend-powerstation-percent {
+    height:2em;
+    font-size: 1em;
+    padding: .25em 0 .5em .5em;
 }
