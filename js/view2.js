@@ -23,9 +23,9 @@ function drawDots(){
         .attr("stop-opacity", 1);
 
     
-
+    var avgData = []
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
-        var avgData = data
+        avgData = data
         var houses = d3.select("#svgmap").append("g").attr("id","avghouseg")
         var bound = houses.selectAll("circle").data(avgData, function(d){
             return( d && d['longitude'] + d['latitude'] +d["max_consumed"]) 
@@ -38,12 +38,9 @@ function drawDots(){
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
-            /*
             .attr("transform", function(d){
-                var cx = d3.select(this).attr("cx")
-                var cy = d3.select(this).attr("cy")
-                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
-            })*/
+                return "translate(100,100)"
+            })
             .attr("r", function(d) {
                 return +d["max_consumed"]
             })
@@ -83,8 +80,8 @@ function drawMoreDots(data){
     var bound = houses.selectAll("circle").data(data, function(d){
         return (d && d['longitude'] + d['latitude'] +d["max_generated"])
     })
-    bound.enter()
-        .append("circle")
+      
+    bound.append("circle")
         .attr("r", function(d) {
             return +d["max_generated"]
         })
@@ -93,12 +90,11 @@ function drawMoreDots(data){
         })
         .attr("cy", function(d) {
             return projection([+d["longitude"], +d["latitude"]])[1]
-        })
-        /*
+        })/*
         .attr("transform", function(d){
             var cx = d3.select(this).attr("cx")
             var cy = d3.select(this).attr("cy")
-            return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+            return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+")"
         })*/
         .style('fill','url(#gradient2)')
 }
