@@ -189,4 +189,29 @@ function drawOutagesPie(){
     var chart = new google.visualization.PieChart(document.getElementById('outages-pie'));
     chart.draw(data, options);
 }
+
+function drawFuelPie(){
+    var data = google.visualization.arrayToDataTable([
+        ['Source', ''],
+        ['Gas', 29.80],
+        ['Electric', 4.40],
+        ['Fuel Oil, Kerosene',  50.10],
+        ['Wood', 14.20],
+        ['Other', 1.30],
+        ['Non Used', .20]
+    ])
+
+    var options = {
+//        title: 'Total Generation By Type',
+        titlePosition: 'none',
+        pieHole: 0.4,
+        height: 300,
+        chartArea: 0,
+        legend: {position: 'none'},
+        colors: ["#118C4E", "#B71427","#6DBDD6", "#003366","#DF3D82", "#FFE658"]
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('fuel-pie'));
+    chart.draw(data, options);
+}
 //});
