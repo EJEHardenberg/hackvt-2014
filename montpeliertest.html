@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+
+<script>
+    function getProjectionForPoint(x, y){
+        return d3.geo.transverseMercator()
+                .rotate([72.57, -44.30])
+                .translate([x,y])
+                .scale([240000]);
+    }
+    // Set window height + width
+    var width = 500,
+            height = 650;
+    var center
+    // Define map projection
+    var projection
+
+
+    d3.json("json/vermont.json", function(error, vt) {
+        var vermont = topojson.feature(vt, vt.objects.vt_towns);
+        var montpelier
+        vermont.features.forEach(function(feature){
+            var property = feature.properties
+            if(property.town == "MONTPELIER"){
+                montpelier = feature
+            }
+        })
+        projection = d3.geo.transverseMercator()
+                .rotate([72.57, -44.30])
+                .translate([175,185])
+                .scale([240000]);
+
+        var path = d3.geo.path()
+                .projection(projection);
+
+        // Define path generator
+
+
+        // Create SVG Element
+        var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+        svg.append("path")
+                .datum(montpelier)
+                .attr("d", path)
+                .style("stroke", "#777")
+                .style("stroke-width", "1")
+                .style("fill","#ccc");
+    });
+
+
+</script>
+<script src="js/view2.js"></script>
