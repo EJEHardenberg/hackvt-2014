@@ -25,6 +25,7 @@
 </style>
 <body>
     <div id="map-container"></div>
+    <div id="legend"></div>
     <div id="left-column">
         <input type="text" id="town-search" />
         <button name="hideshow">CLICKME</button>
@@ -59,15 +60,13 @@
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
     // Legend Stuff
+    d3.select("legend").selectAll("div").data(color.domain())
+        .enter().append("div")
+            .attr("background-color", Object)
+            .attr("width", 0)
+            .transition()
+            .attr("width", 30)
 
-    var y = d3.scale.sqrt()
-        .domain([0, 50000])
-        .range([0,325]);
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .tickValues(color.domain())
-        .orient("right");
 
     d3.json("json/vermont.json", function(error, vt) {
       // if (error) return console.error(error);
