@@ -23,7 +23,9 @@
                     <div id="data">
                         <span name="status"></span>
                         <img name="loading" src="images/loader.gif" style="display: none">
-                        <select name="chartselect"></select>
+                        <select name="chartselect">
+                            <option>Select a Power Plant</option>
+                        </select>
                         <svg id="powerplantchart"></svg>
                     </div>
                 </div>
@@ -190,7 +192,9 @@
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             var showData = function(id){
-                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id])
+                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
+                    return (d && d[0] && d[0].name) || d3.select(this).name
+                })
 
                 
                 boundSelect.enter().append("option")
@@ -228,7 +232,7 @@
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
                                         window.loadedReportData[d.id].push(seriesReports.series)
-                                        console.log(repData.reports.length, window.loadedReportData[d.id].length)
+                                        console.info(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
                                             statusText
                                                 .text("Done Loading!")
@@ -241,9 +245,15 @@
                                         }
                                     })
                                 };
+                            }else{
+                                loadingBar.style("display","none")
+                                statusText
+                                    .text("Power Plant has no reporting data")
+                                    .style("color", "red")
                             }
                         }
                     }else{
+                        loadingBar.style("display","none")
                         statusText
                             .text("Power Plant has no reporting data")
                             .style("color", "red")
