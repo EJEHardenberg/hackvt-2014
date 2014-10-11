@@ -155,6 +155,7 @@
 
     d3.json("json/vermont.json", function(error, vt) {
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
+        window.vermont = vermont
         svg.append("path")
             .datum(vermont)
             .attr("d", path)
@@ -163,7 +164,9 @@
             .style("fill", "#eee")
         
         svg.selectAll(".subunit")
-                .data(topojson.feature(vt, vt.objects.vt_towns).features)
+                .data(topojson.feature(vt, vt.objects.vt_towns).features, function(d){
+                    return d.properties.town 
+                })
             .enter().append("path")
                 .attr("d", path)
                 .classed("town", true)
@@ -197,7 +200,23 @@
                 })
                 .on("click", function(d){
                     console.log('zooooooooooom')
+                    var coords = d3.mouse(this)
+                    var town = d.properties.town
+                    magicZoomeyNess(town, coords)
                 })
+
+                function magicZoomeyNess(town, coords){
+                    svg.selectAll("path")
+                        .transition()
+                        .attr("transform", function(d){
+                            if(d && d.properties){
+                                if(town == d.properties.town){
+                                    return "translate(" + (-coords[0]/2) +","+ (-coords[1]/2)+") scale(2)"
+                                }
+                            }
+                            return "scale(.1)"
+                        })
+                }
 
         //To hold map for Power_STationReports
         window.reportData = {}
