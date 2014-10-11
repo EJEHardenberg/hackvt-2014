@@ -28,4 +28,22 @@ _testmain.go
 *.swp
 .DS_Store
 #Ignore shared folder of jodebox on Ethan's machine
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+
 jode_updated_201410
