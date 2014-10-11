@@ -38,7 +38,7 @@
 </head>
 <body>
     <div class="row container panel">
-        <div class="small-12 large-4 large-push-8 columns">
+        <div id="sidebar-view-1" class="small-12 large-4 large-push-8 columns">
             <dl class="tabs" data-tab>
                 <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
                 <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
@@ -108,6 +108,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
+            <h2 class="town-name">Montpelier</h2>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div>
@@ -520,6 +523,8 @@
                         console.log('zooooooooooom')
                         var coords = d3.mouse(this)
                         var town = d.properties.town
+                        d3.select(this)
+                                .classed("town-zoom", true);
                         magicZoomeyNess(town, coords)
                         drawDots();
                     }
@@ -536,6 +541,7 @@
                             }
                             return "scale(.3)"
                         })
+                    $('body').trigger('view-2');
                 }
 
         //To hold map for Power_STationReports
@@ -681,6 +687,17 @@
                 })
         })
 
+    });
+
+    $(document).ready(function(){
+        $('body').on('view-2', function(){
+            d3.selectAll(".town-search")
+                .classed("town-search", false);
+            $("#town-search").val("");
+            $("#sidebar-view-1").hide();
+            $("#sidebar-view-2").show();
+            showingConsumption = false;
+        });
     });
 
 
