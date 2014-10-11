@@ -27,20 +27,18 @@
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
         var montpelier
         vermont.features.forEach(function(feature){
-                var property = feature.properties
-                if(property.town == "MONTPELIER"){
-                    montpelier = feature
-                }
-            })
+            var property = feature.properties
+            if(property.town == "MONTPELIER"){
+                montpelier = feature
+            }
+        })
         projection = d3.geo.transverseMercator()
                 .rotate([72.57, -44.30])
                 .translate([175,185])
                 .scale([240000]);
 
         var path = d3.geo.path()
-                        .projection(projection)
-
-                ;
+                .projection(projection);
 
         // Define path generator
 
@@ -55,12 +53,7 @@
                 .attr("d", path)
                 .style("stroke", "#777")
                 .style("stroke-width", "1")
-                .style("fill","#ccc")
-                ;
-
-
-
-
+                .style("fill","#ccc");
     });
 
 
