@@ -57,7 +57,7 @@
 
 
                         <div class="pieContainer chartContainer">
-                            <div id="pieTitle">Total Generation by Type</div>
+                            <div class="pieTitle">Total Generation by Type</div>
                             <div id="pieChart"></div>
                         </div>
                     </div>
@@ -65,22 +65,28 @@
                 <div id="consumption-panel" class="content">
                     <input type="text" id="town-search" placeholder="Search Town">
                     <div>
-                        <div class="data-headline">All Households</div>
-                        <div class="data-title">Average KWH Consumed Per Month</div>
-                        <div class="data-point">634.59</div>
-                        <div class="data-title">Average KWH Generated Per Month</div>
-                        <div class="data-point">4.47 </div>
-                        <div class="data-title">Net KWH Used</div>
-                        <div class="data-point">630.12</div>
-
-
-                        <div class="data-headline">Households that Generate Power</div></h5>
-                        <div class="data-title">Average KWH Consumed Per Month</div>
-                        <div class="data-point">685.51</div>
-                        <div class="data-title">Average KWH Consumed Per Month</div>
-                        <div class="data-point">760.41 </div>
-                        <div class="data-title">Net KWH Used</div>
-                        <div class="data-point">-74.9 </div>
+                        <div class="dataset-div">
+                            <div class="data-headline">All Households</div>
+                            <div class="data-title">Average KWH Consumed Per Month</div>
+                            <div class="data-point redpoint">634.59</div>
+                            <div class="data-title">Average KWH Generated Per Month</div>
+                            <div class="data-point greenpoint">4.47 </div>
+                            <div class="data-title">Net KWH Used</div>
+                            <div class="data-point redpoint">630.12</div>
+                        </div>
+                        <div class="dataset-div">
+                            <div class="data-headline">Households that Generate Power</div>
+                            <div class="data-title">Average KWH Consumed Per Month</div>
+                            <div class="data-point redpoint">685.51</div>
+                            <div class="data-title">Average KWH Generated Per Month</div>
+                            <div class="data-point greenpoint">760.41 </div>
+                            <div class="data-title">Net KWH Used</div>
+                            <div class="data-point greenpoint">-74.9 </div>
+                        </div>
+                        <div class="pieContainer chartContainer">
+                            <div class="pieTitle">Outages by Cause</div>
+                            <div id="outages-pie"></div>
+                        </div>
                     </div>
                 </div>
             </div>
