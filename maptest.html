@@ -60,14 +60,14 @@
 
     // Legend Stuff
 
-    // var y = d3.scale.sqrt()
-    //     .domain([0, 50000])
-    //     .range([0,325]);
+    var y = d3.scale.sqrt()
+        .domain([0, 50000])
+        .range([0,325]);
 
-    // var yAxis = d3.svg.axis()
-    //     .scale(y)
-    //     .tickValues(color.domain())
-    //     .orient("right");
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickValues(color.domain())
+        .orient("right");
 
     d3.json("json/vermont.json", function(error, vt) {
       // if (error) return console.error(error);
