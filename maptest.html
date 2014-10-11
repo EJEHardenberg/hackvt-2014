@@ -77,7 +77,6 @@
             .datum(vermont)
             .attr("d", path)
             .style("stroke", "#eee")
-            .style("opacity", ".8")
             .style("stroke-width", "1")
             .style("fill", "#eee")
         
@@ -102,13 +101,13 @@
                         .text(d.properties.town);
 
                     d3.select(this)
-                    .style("opacity", "1.0");
+                    .style("fill", "#509e2f");
                 })
                 .on("mouseout", function(d) {
                     d3.select("#tooltip").remove();
 
                     d3.select(this)
-                    .style("opacity", ".8")
+                    .style("fill", "#eee")
                 })
 
         /* Load powerplants */
