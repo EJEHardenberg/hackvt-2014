@@ -14,8 +14,8 @@
     <div class="row container">
          <div class="small-12 large-4 large-push-8 columns">
             <dl class="tabs" data-tab>
-                <dd class="active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
-                <dd id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+                <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
             </dl>
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
@@ -23,12 +23,49 @@
                     <div id="data">
                         <span name="status"></span>
                         <img name="loading" src="images/loader.gif" style="display: none">
-                        <select></select>
-                        <svg></svg>
+                        <select name="chartselect">
+                            <option>Select a Power Plant</option>
+                        </select>
+                        <svg id="powerplantchart"></svg>
                     </div>
                 </div>
                 <div id="consumption-panel" class="content">
                     <input type="text" id="town-search" placeholder="Search Town">
+                    <div>
+                        <h5><strong>All Households:</strong></h5>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            634.59
+                        </p>
+                        <p>
+                            <strong>Average KWH Generated Per Month</strong>
+                            <br />
+                            4.47
+                        </p>
+                        <p>
+                            <strong>Net KWH Used</strong>
+                            <br />
+                            630.12
+                        </p>
+
+                        <h5><strong>Households that generate power:</strong></h5>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            685.51
+                        </p>
+                        <p>
+                            <strong>Average KWH Consumed Per Month</strong>
+                            <br />
+                            760.41
+                        </p>
+                        <p>
+                            <strong>Net KWH Used</strong>
+                            <br />
+                            -74.9
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,19 +80,21 @@
     $(document).foundation();
     // Set window height + width
     var width = 500,
-        height = 800,
+        height = 600,
         circleRadius = 7,
         animationDuration = 1200;
 
     var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
     var statusText = d3.select("span[name=status]")
     var loadingBar = d3.select("img[name=loading]")
+    var chartBase = d3.select("#powerplantchart")
+    var chartselect = d3.select("select[name=chartselect]")
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
-        .translate([250,270])
-        .scale([17000]);
+        .translate([250,200])
+        .scale([12000]);
 
     // Define path generator
     var path = d3.geo.path()
@@ -63,11 +102,25 @@
 
     // Create SVG Element
     var svg = d3.select("#map-container .map").append("svg")
+        .attr("id", "svgmap")
         .attr("width", width)
         .attr("height", height);
 
+    var fuelCodes = ['HYC','NUC','PET','SUN','WAS','WND','WWW']
+
+    var fuelColorLabels = d3.scale.ordinal().domain(fuelCodes)
+        .range([
+            '(Water at a Conventional Hydroelectric Turbine)',
+            '(Nuclear Fission (Uranium, Plutonium, Thorium))',
+            '(Petroleum)',
+            '(Solar PV and thermal)',
+            '(unknown)',
+            '(Wind)',
+            '(Wood and Wood Waste)'
+            ])
+
     // Define scale to sort data values into color buckets
-    var color = d3.scale.ordinal().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+    var color = d3.scale.ordinal().domain(fuelCodes)
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
     //Hurray Global State
@@ -81,7 +134,7 @@
             .attr("width", 0)
             .transition().duration(animationDuration)
             .attr("width", "20px")
-            .text(function(d){ return d })
+            .text(function(d){ return d + " " + fuelColorLabels(d) })
 
 
     d3.json("json/vermont.json", function(error, vt) {
@@ -143,7 +196,7 @@
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
-            var plants = d3.select("svg").append("g")
+            var plants = d3.select("#svgmap").append("g")
 
             var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
                     return (d && d['Plant Code'])
@@ -152,7 +205,18 @@
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             var showData = function(id){
+                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
+                    return (d && d[0] && d[0].name) || d3.select(this).name
+                })
 
+                
+                boundSelect.enter().append("option")
+                    .attr('value', function(d){ return d[0].name })
+                    .text(function(d){ return d[0].name })
+
+                boundSelect.exit().remove()
+
+                chartselect[0][0].selectedIndex = 0
             }
 
             bound.enter()
@@ -173,16 +237,15 @@
                         if(d.id in window.loadedReportData){
                             loadingBar.style("display","none")
                             statusText.text("")
-                            //do something
+                            showData(d.id)
                         }else{
                             if(repData && repData.reports){
                                 window.loadedReportData[d.id] = []
                                 for (var i = repData.reports.length - 1; i >= 0; i--) {
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
-                                        var j = i 
                                         window.loadedReportData[d.id].push(seriesReports.series)
-                                        console.log(repData.reports.length, window.loadedReportData[d.id].length)
+                                        console.info(repData.reports.length, window.loadedReportData[d.id].length)
                                         if(repData.reports.length == window.loadedReportData[d.id].length){
                                             statusText
                                                 .text("Done Loading!")
@@ -191,13 +254,19 @@
                                             loadingBar.transition().duration(animationDuration)
                                                 .style("opacity","0")
                                                 .style("display", "block")
-                                            /* Show all the data we've loaded */
+                                            showData(d.id)
                                         }
                                     })
                                 };
+                            }else{
+                                loadingBar.style("display","none")
+                                statusText
+                                    .text("Power Plant has no reporting data")
+                                    .style("color", "red")
                             }
                         }
                     }else{
+                        loadingBar.style("display","none")
                         statusText
                             .text("Power Plant has no reporting data")
                             .style("color", "red")
