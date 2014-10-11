@@ -1,3 +1,7 @@
+body{
+     background-image: url('../images/background.jpg');
+}
+
 svg {
     font: 10px sans-serif;
     display: inline;
@@ -26,6 +30,9 @@ circle{
 
 .container {
     margin-top: 2em;
+    border-color: #005A31;
+    border-width: 5px;
+    background-color: #fff;
 }
 
 /* TOWNS */
@@ -41,9 +48,22 @@ circle{
     fill: #509e2f;
 }
 
+.tab {
+    width: 50%;
+}
+
 /* LEGEND STUFF*/
 .legend-powerstation-percent {
     height:2em;
     font-size: 1em;
     padding: .25em 0 .5em .5em;
+}
+
+
+.sidepanel {
+    border: ;
+}
+
+.row {
+    max-width:80rem;
 }
