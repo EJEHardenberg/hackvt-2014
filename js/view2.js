@@ -3,7 +3,7 @@
 
 
 function drawDots(){
-    var gradient = d3.select("svg").append("svg:defs")
+    var gradient = d3.select("#svgmap").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient")
         .attr("x1", "0%")
@@ -25,7 +25,7 @@ function drawDots(){
     
 
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
-        var houses = d3.select("svg").append("g").attr("id","avghouseg")
+        var houses = d3.select("#svgmap").append("g").attr("id","avghouseg")
         var bound = houses.selectAll("circle").data(data, function(d){
             return( d && d.id) 
         })
@@ -58,7 +58,7 @@ function drawDots(){
 
 
 function drawMoreDots(){
-    var gradient = d3.select("svg").append("svg:defs")
+    var gradient = d3.select("#svgmap").append("svg:defs")
         .append("svg:radialGradient")
         .attr("id", "gradient2")
         .attr("x1", "0%")
@@ -79,7 +79,7 @@ function drawMoreDots(){
 
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
         console.log(data)
-        var houses = d3.select("svg").append("g")
+        var houses = d3.select("#svgmap").append("g").attr("id", "avghouse2")
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
             .append("circle")
