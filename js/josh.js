@@ -5,11 +5,11 @@ $(document).ready(function(){
 	});
 
     $('#showJosh').click(function(){
-        $("#joshpage").fadeIn();
+        $("#myModal").slideDown();
     });
 
     $('#hideJosh').click(function(){
-        $("#joshpage").fadeOut();
+        $("#myModal").fadeOut();
     });
 
 });

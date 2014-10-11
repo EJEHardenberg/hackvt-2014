@@ -148,7 +148,8 @@ ul{
 	border: 0px;
 	width: 80%;
 	/* background-color: #eee; */
-	display: block; -webkit-transform-origin: 0px 0px; 
+	display: none;
+    -webkit-transform-origin: 0px 0px;
 	opacity: 1; 
 	-webkit-transform: scale(1, 1); 
 	visibility: visible; top: 100px;
