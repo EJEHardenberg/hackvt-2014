@@ -29,7 +29,8 @@ function drawChart(stationName) {
     var stationMap = {
         "Bellows Falls" : bellowsFalls,
         "Ascutney"      : ascutney,
-        "Canaan"        : canaan
+        "Canaan"        : canaan,
+        "Montpelier"    : burlingtonGt
     };
 
 
