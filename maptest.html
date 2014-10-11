@@ -26,7 +26,9 @@
                         <select name="chartselect">
                             <option>Select a Power Plant</option>
                         </select>
-                        <svg id="powerplantchart"></svg>
+                        <div class="small-12 large-4">
+                            <svg id="powerplantchart"></svg>
+                        </div>
                     </div>
                 </div>
                 <div id="consumption-panel" class="content">
@@ -123,6 +125,70 @@
     var color = d3.scale.ordinal().domain(fuelCodes)
         .range(["#f00","#0f0","#00f","#ff0","#0ff","#abc","#000"]);
 
+    /*  For parsing out the series data from power plant reports */ 
+    var margin = {top: 20, right: 20, bottom: 30, left: 50}
+    var reportChartWidth = 300 - margin.left - margin.right
+    var reportChartHeigh = 300 - margin.top - margin.bottom
+    var parseDate = d3.time.format("%Y").parse
+    var reportX = d3.time.scale()
+        .range([0, reportChartWidth])
+    var reportY = d3.scale.linear()
+        .range([reportChartHeigh, 0])
+    var reportXAxis = d3.svg.axis()
+        .scale(reportX)
+        .orient("bottom");
+    var reportYAxis = d3.svg.axis()
+        .scale(reportY)
+        .orient("left");
+    var line = d3.svg.line()
+        .x(function(d) { return reportX(d[0]); })
+        .y(function(d) { return reportY(d[1]); });
+
+    chartselect
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var showData = function(id){
+        var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
+            return (d && d[0] && d[0].name) || d3.select(this).name
+        })
+
+        chartselect[0][0].onchange = function(){
+            var selectThis = d3.select(this)
+            console.log(selectThis.data())
+        }
+/*
+        reportX.domain(d3.extent(data, function(d) { return d[0]; }));
+        reportY.domain(d3.extent(data, function(d) { return d[1]; }));
+
+        chartselect.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + reportChartHeigh + ")")
+            .call(reportXAxis);
+
+        chartselect.append("g")
+            .attr("class", "y axis")
+            .call(reportYAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Price ($)");
+*/
+        
+        boundSelect.enter().append("option")
+            .attr('value', function(d){ return d[0].name })
+            .text(function(d){ return d[0].name })
+
+        boundSelect.exit().remove()
+
+        chartselect[0][0].selectedIndex = 0
+    }
+
+
     //Hurray Global State
     var showingConsumption = false;
 
@@ -204,21 +270,6 @@
 
             var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
-            var showData = function(id){
-                var boundSelect = chartselect.selectAll("option").data(window.loadedReportData[id], function(d){
-                    return (d && d[0] && d[0].name) || d3.select(this).name
-                })
-
-                
-                boundSelect.enter().append("option")
-                    .attr('value', function(d){ return d[0].name })
-                    .text(function(d){ return d[0].name })
-
-                boundSelect.exit().remove()
-
-                chartselect[0][0].selectedIndex = 0
-            }
-
             bound.enter()
                 .append("circle")
                 .on('click', function(d){
