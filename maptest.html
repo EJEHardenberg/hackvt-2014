@@ -12,6 +12,14 @@
     <script src="js/modernizr.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/foundation.min.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+
+
+    </script>
+
+    <script src="js/chartLoader.js"></script>
     <script src="js/josh.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
@@ -38,10 +46,12 @@
                     <div id="data">
                         <span name="status"></span>
                         <img name="loading" src="images/loader.gif" style="display: none">
-                        <select name="chartselect">
+                        <select name="chartselect" style="display:none;">
                             <option>Select a Power Plant</option>
                         </select>
                         <svg id="powerplantchart"></svg>
+                        <div id="pieChart"></div>
+
                     </div>
                 </div>
                 <div id="consumption-panel" class="content">
@@ -85,7 +95,8 @@
             </div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
-            <div class="map"></div> 
+            <div class="map"></div>
+            <div id="powerplantChart"></div>
         </div>
     </div>
 
