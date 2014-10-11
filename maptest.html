@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-
     svg {
         font: 10px sans-serif;
         display: inline;
@@ -55,10 +54,10 @@
         .attr("width", width)
         .attr("height", height);
 
-    // // Define scale to sort data values into color buckets
-    // var color = d3.scale.threshold()
-    //     .domain([10, 200, 1000, 2000, 5000, 10000, 20000, 40000, 50000])
-    //     .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+    // Define scale to sort data values into color buckets
+    var color = d3.scale.threshold()
+        .domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+        .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f"]);
 
     // Legend Stuff
 
@@ -127,7 +126,7 @@
                 .attr("cx", function(d){ 
                     return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
-                .style("fill", function(d,i){ return "#" + (""+d.id).substring(0,3)  })
+                .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
                 .attr("r", 0)
                 .transition().duration(1000)
                 .attr("r", 10)
