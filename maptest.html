@@ -91,13 +91,7 @@
                         .classed("town-hover", false);
                 })
                 .on("click", function(d){
-                    var coords = d3.mouse(this) //[x,y]
-                    svg
-                        .attr("width",width)
-                        .attr("height", height)
-                        .transition().duration(1400)
-                        .attr("width", width*2)
-                        .attr("height",height*2)
+                    console.log('hi')
                 })
 
 
