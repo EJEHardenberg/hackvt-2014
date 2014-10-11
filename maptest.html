@@ -174,7 +174,18 @@
                                 for (var i = repData.reports.length - 1; i >= 0; i--) {
                                     var seriesId = repData.reports[i]
                                     d3.json(reportsURL.replace("<SERIES_ID_HERE>", seriesId), function(error, seriesReports){
+                                        var j = i 
                                         window.loadedReportData[d.id].push(seriesReports.series)
+                                        if(j == reportData.reports.length){
+                                            statusText
+                                                .text("Done Loading!")
+                                                .transition().duration(animationDuration)
+                                                .text("")
+                                            loadingBar.transition().duration(animationDuration)
+                                                .style("opacity","0")
+                                                .style("display", "block")
+                                            /* Show all the data we've loaded */
+                                        }
                                     })
                                 };
                             }
