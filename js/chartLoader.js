@@ -152,7 +152,9 @@ function drawChart(stationName) {
 
     var options = {
         title: 'Total Generation: '+stationName,
-        legend: {position: 'none'}
+        legend: {position: 'none'},
+        hAxis: {textStyle:{fontSize: '10'}},
+        vAxis: {title: "MWh"}
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('powerplantChart'));
