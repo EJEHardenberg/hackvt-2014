@@ -45,6 +45,11 @@ function drawDots(){
                 return +d["max_consumed"]
             })
             .style('fill','url(#gradient)')
+            .attr("r",0)
+            .transition()
+            .attr("r", function(d) {
+                return +d["max_consumed"]
+            })
     })
     drawMoreDots();
 }
