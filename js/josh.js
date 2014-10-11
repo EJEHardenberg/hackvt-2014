@@ -1,3 +1,3 @@
 $(document).ready(function(){
-	$('#test').html("JQuery loaded");
+	$('#reveal_button').trigger('click');
 });
