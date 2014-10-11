@@ -132,9 +132,6 @@
                         </ul>
                     </div>
                 </div>
-
-
-
                 <div class="trendline_nest">
                     <img src="images/trendline_user1.png"/>
                 </div>
@@ -483,10 +480,13 @@
                     }
                 })
                 .on("click", function(d){
-                    console.log('zooooooooooom')
-                    var coords = d3.mouse(this)
-                    var town = d.properties.town
-                    magicZoomeyNess(town, coords)
+
+                    if(showingConsumption){
+                        console.log('zooooooooooom')
+                        var coords = d3.mouse(this)
+                        var town = d.properties.town
+                        magicZoomeyNess(town, coords)
+                    }
                 })
 
                 function magicZoomeyNess(town, coords){
