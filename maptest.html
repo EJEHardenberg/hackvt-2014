@@ -5,14 +5,14 @@
     <link rel="stylesheet" type="text/css" href="css/map.css">
 </head>
 <body>
-    <div class="row">
-        <div id="map-container" class="large-9 columns">
-            <div class="map"></div>
-            <div id="legend"></div>
-        </div>
-        <div id="right-column" class="large-3 columns">
+    <div class="row container">
+         <div class="small-12 large-3 large-push-9 columns">
             <input type="text" id="town-search" />
             <button name="hideshow">CLICKME</button>
+        </div>
+        <div id="map-container" class="small-12 large-9 large-pull-3 columns">
+            <div class="map"></div>
+            <div id="legend"></div>
         </div>
     </div>
     <script src="libs/d3.min.js"></script>

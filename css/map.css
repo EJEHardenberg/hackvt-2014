@@ -35,3 +35,7 @@ path{
 .row {
     max-width: 80rem;
 }
+
+.container {
+    margin-top: 2em;
+}
