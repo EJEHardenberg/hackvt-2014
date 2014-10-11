@@ -24,8 +24,8 @@
     // Set window height + width
     var width = 500,
         height = 800,
-        circleRadius = 5;
-
+        circleRadius = 5,
+        animationDuration = 1200;
 
     // Define map projection
     var projection = d3.geo.transverseMercator()
@@ -52,16 +52,12 @@
             .style("background-color", function(d){ return color(d)})
             .style("height", "1em")
             .attr("width", 0)
-            .transition()
+            .transition().duration(animationDuration)
             .attr("width", "20px")
             .text(function(d){ return d })
 
 
     d3.json("json/vermont.json", function(error, vt) {
-      // if (error) return console.error(error);
-      // svg.append("path")
-      //     .datum(topojson.feature(vermont, vermont.objects.vt_towns))
-      //     .attr("d", d3.geo.path().projection(d3.geo.mercator()));
         var vermont = topojson.feature(vt, vt.objects.vt_towns);
         svg.append("path")
             .datum(vermont)
@@ -99,6 +95,11 @@
                     d3.select(this)
                         .classed("town-hover", false);
                 })
+                .on("click", function(d){
+                    console.log('hico')
+                })
+
+
 
         /* Load powerplants */
         d3.json("powerplant.json", function(error, powerplants){
@@ -115,7 +116,7 @@
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
                 .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
                 .attr("r", 0)
-                .transition().duration(1000)
+                .transition().duration(animationDuration)
                 .attr("r", circleRadius)
 
 
@@ -143,10 +144,6 @@
                 })
         })
 
-        // var g = svg.append("g")
-        //     .attr("class", "key")
-        //     .attr("transform", "translate(320, 165)")
-        //     .call(yAxis);
     });
 
 
