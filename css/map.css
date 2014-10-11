@@ -7,6 +7,10 @@ path{
     cursor: pointer;
 }
 
+circle{
+    cursor: pointer;
+}
+
 .key path {
     display: none;
 }

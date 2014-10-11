@@ -21,7 +21,7 @@
                 </div>
                 <div id="consumption-panel" class="content">
                     <input type="text" id="town-search" placeholder="Search Town">
-                    <button name="hideshow">CLICKME</button>
+                    <button name="hideshow">Hide PowerPlants</button>
                 </div>
             </div>
         </div>
@@ -60,9 +60,8 @@
 
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
-        .enter()
-            .append("div")
-            .classed("legend-powerstation-percent", true)
+        .enter().append("div")
+            .classed(".legend-powerstation-percent", true)
             .style("background-color", function(d){ return color(d)})
             .attr("width", 0)
             .transition().duration(animationDuration)
@@ -121,16 +120,38 @@
             var bound = plants.selectAll("circle").data(powerplants.DATA, function(d){
                     return (d && d['Plant Code'])
                 })
+
+            var fillPowerPlant = function(d){ return color(d['Aggregate Fuel Type'])  }
             
             bound.enter()
                 .append("circle")
-                .attr("cx", function(d){ 
-                    return projection([d.lon,d.lat])[0]})
+                .on('click', function(d){
+                    console.info('Populate with data when Anders is done', d)
+                    //http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID HERE>
+                })
+                .on("mouseover", function(d){
+                    var plantColor = color(d['Aggregate Fuel Type']).replace("#","")
+                    var tmp = plantColor
+                    plantColor = plantColor + plantColor
+                    plantColor = plantColor.replace(tmp, '000')
+                    d3.select(this)
+                        .style('fill', plantColor)
+                        .transition().duration(animationDuration/2)
+                        .attr("r", circleRadius*3)
+                })
+                .on("mouseout", function(d){
+                    d3.select(this)
+                        .style('fill', fillPowerPlant(d))
+                        .transition().duration(animationDuration/2)
+                        .attr("r", circleRadius)
+                })
+                .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
-                .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
+                .style("fill", fillPowerPlant)
                 .attr("r", 0)
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
+
 
 
             var showing = true
