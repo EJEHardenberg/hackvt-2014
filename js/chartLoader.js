@@ -54,11 +54,10 @@ function drawPieChart() {
         ['Hydro',    46.8],
         ['Oil & Nat. Gas',  0.8],
         ['Wood', 3.8],
-        ['Methane',    1.4],
         ['Wind', 9.3],
         ['Solar', 0.5],
-        ['Other', 30.8]
-    ]);
+        ['Other', 31.2]
+    ])
 
     var options = {
 //        title: 'Total Generation By Type',
@@ -66,7 +65,8 @@ function drawPieChart() {
         pieHole: 0.4,
         height: 300,
         chartArea: 0,
-        legend: {position: 'none'}
+        legend: {position: 'none'},
+        colors: ["#118C4E", "#B71427","#6DBDD6", "#003366","#DF3D82", "#FFE658","#FF9009"]
 
 
     };
