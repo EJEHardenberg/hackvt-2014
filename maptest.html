@@ -111,16 +111,16 @@
             
             bound.enter()
                 .append("circle")
-                .attr("cx", function(d){ 
-                    return projection([d.lon,d.lat])[0]})
+                .on('click', function(d){
+                    console.info('Populate with data when Anders is done', d)
+                })
+                .attr("cx", function(d){ return projection([d.lon,d.lat])[0]})
                 .attr("cy", function(d){ return projection([d.lon, d.lat])[1]})
                 .style("fill", function(d,i){ return color(d['Aggregate Fuel Type'])  })
                 .attr("r", 0)
                 .transition().duration(animationDuration)
                 .attr("r", circleRadius)
-                .on('click', function(d){
-                    console.info('Populate with data when Anders is done', d)
-                })
+
 
 
             var showing = true
