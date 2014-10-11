@@ -38,11 +38,12 @@ function drawDots(){
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
+            /*
             .attr("transform", function(d){
                 var cx = d3.select(this).attr("cx")
                 var cy = d3.select(this).attr("cy")
                 return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
-            })
+            })*/
             .attr("r", function(d) {
                 return +d["max_consumed"]
             })
@@ -93,11 +94,12 @@ function drawMoreDots(data){
         .attr("cy", function(d) {
             return projection([+d["longitude"], +d["latitude"]])[1]
         })
+        /*
         .attr("transform", function(d){
             var cx = d3.select(this).attr("cx")
             var cy = d3.select(this).attr("cy")
             return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
-        })
+        })*/
         .style('fill','url(#gradient2)')
 }
 
