@@ -93,8 +93,10 @@
         </div>
         <div id="sidebar-view-2" class="small-12 large-4 large-push-8 columns" style="display:none">
             <h2 class="town-name">Montpelier</h2>
-            <div id="chart_div" style="width: 900px; height: 500px;"></div>
-
+           <div class="pieContainer chartContainer">
+                <div class="pieTitle">Home Heating Fuel</div>
+                <div id="fuel-pie"></div>
+            </div>
             <button id="showJosh">View Sample Households</button>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
@@ -512,8 +514,9 @@
                         d3.select(this)
                                 .classed("town-zoom", true);
                         magicZoomeyNess(town, coords)
-                        drawDots();
+                        drawDots()
                         getLineGraph()
+                        drawFuelPie()
                     }
                 })
 
