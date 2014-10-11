@@ -9,6 +9,11 @@ $(document).ready(function(){
         //$("#myModal").slideDown();
     });
 
+    $('.content-tab').click(function(){
+        $('.content-tab').removeClass("tab-active");
+        $(this).addClass("tab-active");
+    });
+
     // $('#hideJosh').click(function(){
     //     $("#myModal").fadeOut();
     // });

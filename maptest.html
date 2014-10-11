@@ -40,11 +40,12 @@
     <div class="row container panel">
         <div id="sidebar-view-1" class="small-12 large-4 large-push-8 columns">
             <dl class="tabs" data-tab>
-                <dd class="tab active" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
-                <dd class="tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
+                <dd class="tab active tab-active content-tab" id="generation-tab"><a href="#generation-panel">Generation</a></dd>
+                <dd class="tab content-tab" id="consumption-tab"><a href="#consumption-panel">Consumption</a></dd>
             </dl>
             <div class="tabs-content">
                 <div id="generation-panel" class="content active">
+                    <h2>Energy Generators</h2>
                     <div id="legend"></div>
                     <div id="data">
                         <span name="status"></span>
@@ -97,7 +98,7 @@
                 <div class="pieTitle">Home Heating Fuels By Type</div>
                 <div id="fuel-pie"></div>
             </div>
-            <button id="showJosh">View Sample Households</button>
+            <div id="showJosh">View Sample Households</div>
         </div>
         <div id="map-container" class="small-12 large-8 large-pull-4 columns">
             <div class="map"></div>
@@ -656,13 +657,13 @@
             d3.select("#generation-tab").on("click", function(){
                 if(!showingConsumption){return}
                 showingConsumption = false;
-                d3.selectAll(".town-outline").style("stroke", "#eee");
+                d3.selectAll(".town-outline").transition().style("stroke", "#eee");
                 circles.attr("r",0).transition().attr("r",circleRadius)
             })
             d3.select("#consumption-tab").on("click", function(){
                 if(showingConsumption){return}
                 showingConsumption = true;
-                d3.selectAll(".town-outline").style("stroke", "#555");
+                d3.selectAll(".town-outline").transition().style("stroke", "#555");
                 circles.attr("r",circleRadius).transition().attr("r",0)
                 setGraphToOutageOverTime()
             })

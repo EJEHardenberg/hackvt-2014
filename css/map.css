@@ -81,3 +81,7 @@ line{
 .row {
     max-width:80rem;
 }
+
+#map-container {
+    border-right: 3px solid #ddd;
+}
