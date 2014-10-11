@@ -28,6 +28,7 @@
     </div>
     <script src="libs/d3.min.js"></script>
     <script src="libs/d3.topojson.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>   
     </div>    
 <script>
 
@@ -148,7 +149,7 @@
             paths.style("fill", function(d){
                     if(d && d.properties){
                         var dTown = d.properties.town
-                        if( dTown.toLowerCase().indexOf(townName.toLowerCase()) == -1 || townName.trim().length == 0){
+                        if( dTown.substring(0, townName.length).toLowerCase() != townName.toLowerCase() || townName.trim().length == 0){
                             return '#eee'
                         }else{
                             return '#f00'
