@@ -49,8 +49,8 @@
     // Legend Stuff
     d3.select("#legend").selectAll("div").data(color.domain())
         .enter().append("div")
+            .classed(".legend-powerstation-percent", true)
             .style("background-color", function(d){ return color(d)})
-            .style("height", "1em")
             .attr("width", 0)
             .transition().duration(animationDuration)
             .attr("width", "20px")
