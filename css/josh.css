@@ -27,15 +27,20 @@
 }
 
 #powerplantChart{
-    width: 100%;
+    width: 120%;
     margin:auto;
+    margin-left: -11%;
+}
+
+.lineContainer{
+    padding-bottom: 10px;
 }
 
 #pieChart{
     margin-left: -45px;
 }
 
-.pieContainer{
+.chartContainer{
     padding-top: 20px;
     border-top: solid 3px #ddd;
 }
