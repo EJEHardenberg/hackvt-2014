@@ -27,6 +27,8 @@
         circleRadius = 5,
         animationDuration = 1200;
 
+    var reportsURL = "http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID_HERE>"
+
     // Define map projection
     var projection = d3.geo.transverseMercator()
         .rotate([72.57, -44.20])
@@ -99,7 +101,11 @@
                     console.log('zooooooooooom')
                 })
 
+        //To hold map for Power_STationReports
         window.reportData = {}
+        //To hold data loaded from querying against the ids from Power_Station_reports
+        window.loadedReportData = {}
+
         d3.json("Power_Station_Reports.json", function(error, reportData){
             for (var i = reportData.length - 1; i >= 0; i--) {
                 window.reportData[reportData[i].id] = reportData[i]
@@ -121,9 +127,21 @@
                 .on('click', function(d){
                     console.info('Populate with data when Anders is done', d)
                     if( d.id in window.reportData){
-                        console.log('DO A THING')
+                        var repData = reportData[d.id] 
+                        if(d.id in window.loadedReportData){
+                            //do something
+                            console.log('DO IT')
+                        }else{
+                            window.loadedReportData[d.id] = []
+                            for (var i = repData.reports.length - 1; i >= 0; i--) {
+                                var seriesId = repData.reports[i]
+                                d3.json(reportsURL.replace("<SERIES_ID_HERE>", series_id), function(error, seriesReports){
+                                    window.loadedReportData[d.id].push(seriesReports.series)
+                                })
+                            };
+                            
+                        }
                     }
-                    //http://api.eia.gov/series/?api_key=6A24BA07916FAA6383DAABC4BAFE7BD7&series_id=<SERIES_ID HERE>
                 })
                 .on("mouseover", function(d){
                     var plantColor = color(d['Aggregate Fuel Type']).replace("#","")
