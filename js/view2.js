@@ -32,6 +32,9 @@ function drawDots(){
         })
         bound.enter()
             .append("circle")
+            .attr("r", function(d) {
+                return +d["max_consumed"]
+            })
             .attr("cx", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[0]
             })
@@ -40,17 +43,13 @@ function drawDots(){
             })
             .attr("transform", function(d){
                 return "translate(155,185)"
-            })
-            .attr("r", function(d) {
-                return +d["max_consumed"]
+                var cy = d3.select(this).attr("cy")
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
             })
             .style('fill','url(#gradient)')
             .attr("r",0)
             .transition()
-            .attr("r", function(d) {
-                return +d["max_consumed"]
-            })
-        bound.exit().remove()
+
     })
     drawMoreDots(avgData);
 }
