@@ -2,11 +2,12 @@
 *.o
 *.a
 *.so
-
+*.swn
+*.swo
 # Folders
 _obj
 _test
-
+<CR>
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out
@@ -24,6 +25,7 @@ _testmain.go
 *.prof
 
 .MacOSX
-
+*.swp
+.DS_Store
 #Ignore shared folder of jodebox on Ethan's machine
 jode_updated_201410
