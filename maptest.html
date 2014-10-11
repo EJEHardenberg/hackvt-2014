@@ -157,28 +157,34 @@
 
         chartselect[0][0].onchange = function(){
             var val = this.options[this.selectedIndex]
-            var datum = d3.select(val).data()
-            console.log(datum)
+            var datum = d3.select(val).data()[0]
+
+            reportX.domain(d3.extent(datum.data, function(d) { return d[0]; }));
+            reportY.domain(d3.extent(datum.data, function(d) { return d[1]; }));
+
+            chartBase.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + reportChartHeigh + ")")
+                .call(reportXAxis);
+
+            chartBase.append("g")
+                .attr("class", "y axis")
+                .call(reportYAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text(datum.units);
+
+            svg.append("path")
+                .datum(data.data)
+                .attr("class", "line")
+                .attr("d", line);
+            
         }
-/*
-        reportX.domain(d3.extent(data, function(d) { return d[0]; }));
-        reportY.domain(d3.extent(data, function(d) { return d[1]; }));
 
-        chartselect.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + reportChartHeigh + ")")
-            .call(reportXAxis);
-
-        chartselect.append("g")
-            .attr("class", "y axis")
-            .call(reportYAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Price ($)");
-*/
+        
         
         boundSelect.enter().append("option")
             .attr('value', function(d){ return d[0].name })
