@@ -25,7 +25,7 @@ function drawDots(){
     
 
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
-        var houses = d3.select("svg").append("g")
+        var houses = d3.select("svg").append("g").attr("id","avghouseg")
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
             .append("circle")
