@@ -5,11 +5,12 @@ $(document).ready(function(){
 	});
 
     $('#showJosh').click(function(){
-        $("#myModal").slideDown();
+    	$('#myModal').foundation('reveal', 'open');
+        //$("#myModal").slideDown();
     });
 
-    $('#hideJosh').click(function(){
-        $("#myModal").fadeOut();
-    });
+    // $('#hideJosh').click(function(){
+    //     $("#myModal").fadeOut();
+    // });
 
 });
