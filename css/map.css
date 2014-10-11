@@ -32,3 +32,6 @@ path{
     fill: #509e2f;
 }
 
+.row {
+    max-width: 80rem;
+}
