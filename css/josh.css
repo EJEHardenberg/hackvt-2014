@@ -20,8 +20,10 @@
 }
 
 .household_size{
-	float: left;
-	margin-top: 20px;
+	border: solid 1px #ccc;
+	background: #eee;
+	float: right;
+	margin-top: 0px;
 	padding: 5px;
 	display: inline-block;
 }
@@ -34,9 +36,38 @@
 	display: inline;
 }
 
+.persona_child{
+	height: 16px;
+}
+
+.persona{
+	height: 25px;
+}
+
+.data_block{
+	height: 120px;
+	margin: auto;	
+}
+.house_data{
+	width: 95%;
+	PADDING: 5PX;
+	border: solid 1px #eee;
+}
+
+.house_icon{
+	float:right;
+	height: 35px;
+	margin-top: 0px;
+	display: inline-block;
+}
+
+.energy_data{
+	width: 95%;
+	border: solid 1px #eee;
+}
+
 
 .household_size img{
-	height: 25px;
 	display: inline-block;
 }
 
@@ -81,6 +112,11 @@
 	font-size: 25px;
 	text-align: right;
 	font-weight: bold;
+}
+
+.house_details_list{
+	margin-top: -35px;
+	font-size: 1em;
 }
 
 #myModal{
