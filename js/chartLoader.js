@@ -26,7 +26,12 @@ var chitCoSolar = [["Year", "MWh"],[201212,219.01],[201211,251.249],[201210,340.
 
 function drawChart(stationName) {
     console.log(stationName);
-    var stationMap = {"Bellows Falls": bellowsFalls, "Ascutney" : ascutney};
+    var stationMap = {
+        "Bellows Falls" : bellowsFalls,
+        "Ascutney"      : ascutney,
+        "Canaan"        : canaan
+    };
+
 
 
     var data = google.visualization.arrayToDataTable(stationMap[stationName]);
