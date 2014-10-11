@@ -1,0 +1,34 @@
+svg {
+    font: 10px sans-serif;
+    display: inline;
+}
+
+path{
+    cursor: pointer;
+}
+
+.key path {
+    display: none;
+}
+
+.key line {
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.key text {
+    font-size: 10px;
+}
+
+.town {
+    fill: #eee;
+}
+
+.town-search {
+    fill: #f00;
+}
+
+.town-hover {
+    fill: #509e2f;
+}
+
