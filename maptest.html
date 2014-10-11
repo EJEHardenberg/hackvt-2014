@@ -465,14 +465,6 @@
                 .attr('r', "8")
                 .attr("cx", "5")
                 .attr("cy", function(d,i){return i *20 + 2})
-
-    legend_nodes.append("rect")
-                .style("fill", function(d){return color(d)})
-                .style("stroke", function(d){return color(d)})
-                .attr("x", "5")
-                .attr("y", function(d,i){ return i* 20 + 2})
-                .attr("width", "100px")
-                .attr("height", ".5em")
     
     legend_nodes.append("text")
                 .attr("x","20")
