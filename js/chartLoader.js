@@ -4,8 +4,11 @@
 
 //$(document).ready(function(){
 google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
+google.setOnLoadCallback(function(){
+    drawChart("test")
+});
+
+function drawChart(stationName) {
     var data = google.visualization.arrayToDataTable([
         ['Year', 'Power'],
         ['2004',  1000],
@@ -15,7 +18,7 @@ function drawChart() {
     ]);
 
     var options = {
-        title: 'Total Generation',
+        title: 'Total Generation: '+stationName,
         legend: {position: 'none'}
     };
 
@@ -27,17 +30,26 @@ function drawChart() {
 
 function drawPieChart() {
     var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
+        ['Source', ''],
+        ['Nuclear', 6.5],
+        ['Hydro',    46.8],
+        ['Oil & Nat. Gas',  0.8],
+        ['Wood', 3.8],
+        ['Methane',    1.4],
+        ['Wind', 9.3],
+        ['Solar', 0.5],
+        ['Other', 30.8]
     ]);
 
     var options = {
-        title: 'My Daily Activities',
-        pieHole: 0.4
+//        title: 'Total Generation By Type',
+        titlePosition: 'none',
+        pieHole: 0.4,
+        height: 300,
+        chartArea: 0,
+        legend: {position: 'none'}
+
+
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
