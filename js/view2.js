@@ -40,7 +40,9 @@ function drawDots(){
                 return projection([+d["longitude"], +d["latitude"]])[1]
             })
             .attr("transform", function(d){
-                return "translate(" + (d.cx*zoomVar.xAdj) +","+ (d.cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
+                var cx = d3.select(this).attr('cx')
+                var cy = d3.select(this).attr('cy')
+                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+") scale("+zoomVar.scale+")"
             })
             .style('fill','url(#gradient)')
     })
