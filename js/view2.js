@@ -12,7 +12,7 @@ function drawDots(){
         .style("width","0")
         .style("height","0")
         .style("display","block")
-        .transition().duration(1200)
+        .transition()
             .style("width","70%")
             .style("height","70%")
             .style("left","150px")
