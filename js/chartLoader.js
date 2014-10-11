@@ -84,7 +84,8 @@ function drawChart(stationName) {
     var chart = new google.visualization.LineChart(document.getElementById('powerplantChart'));
 
     chart.draw(data, options);
-    drawPieChart()
+    drawPieChart();
+    drawOutagesPie();
 }
 
 function drawPieChart() {
@@ -112,6 +113,34 @@ function drawPieChart() {
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+    chart.draw(data, options);
+}
+
+function drawOutagesPie(){
+    var data = google.visualization.arrayToDataTable([
+        ['Source', ''],
+        ['Nuclear', 6.5],
+        ['Hydro',    46.8],
+        ['Oil & Nat. Gas',  0.8],
+        ['Wood', 3.8],
+        ['Wind', 9.3],
+        ['Solar', 0.5],
+        ['Other', 31.2]
+    ])
+
+    var options = {
+//        title: 'Total Generation By Type',
+        titlePosition: 'none',
+        pieHole: 0.4,
+        height: 300,
+        chartArea: 0,
+        legend: {position: 'none'},
+        colors: ["#118C4E", "#B71427","#6DBDD6", "#003366","#DF3D82", "#FFE658","#FF9009"]
+
+
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('outages-pie'));
     chart.draw(data, options);
 }
 //});
