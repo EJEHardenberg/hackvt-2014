@@ -144,7 +144,7 @@
         .x(function(d) { return reportX(d[0]); })
         .y(function(d) { return reportY(d[1]); });
 
-    chartselect
+    chartBase
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -157,6 +157,7 @@
 
         chartselect[0][0].onchange = function(){
             var selectThis = d3.select(this)
+            console.log(this)
             console.log(selectThis.data())
         }
 /*
