@@ -25,7 +25,6 @@ function drawDots(){
     
 
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
-        console.log(data)
         var houses = d3.select("svg").append("g")
         var bound = houses.selectAll("circle").data(data)
         bound.enter()
@@ -50,6 +49,7 @@ function drawDots(){
             .attr("r", function(d) {
                 return +d["max_consumed"]
             })
+        bound.exit().remove()
     })
     drawMoreDots();
 }
