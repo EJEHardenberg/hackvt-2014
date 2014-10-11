@@ -55,7 +55,7 @@
         .attr("height", height);
 
     // Define scale to sort data values into color buckets
-    var color = d3.scale.domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
+    var color = d3.scale.linear().domain(['HYC','NUC','PET','SUN','WAS','WND','WWW'])
         .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f"]);
 
     // Legend Stuff
