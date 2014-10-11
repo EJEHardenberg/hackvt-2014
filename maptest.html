@@ -146,13 +146,14 @@
             var townName = this.value
             console.log(townName)
             svg.selectAll("path").style("fill", function(d){
-
-                    var dTown = d.properties.town
-                    console.log(dTown)
-                    if( dTown.toLowerCase().indexOf(dTown.toLowerCase()) == -1){
-                        return '#eee'
-                    }else{
-                        return '#f00'
+                    if(d && d.properties){
+                        var dTown = d.properties.town
+                        console.log(dTown)
+                        if( dTown.toLowerCase().indexOf(dTown.toLowerCase()) == -1){
+                            return '#eee'
+                        }else{
+                            return '#f00'
+                        }
                     }
                 })
         })
