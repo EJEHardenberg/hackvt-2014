@@ -7,6 +7,16 @@
 	padding: 5px;
 }
 
+.inline-block{
+	display: inline-block;
+}
+
+.li-title{
+	display: inline-block;
+	width: 80px;
+	font-weight: bold;
+}
+
 .user_data{
 	height: 80%;
 	width: 97%;
@@ -46,12 +56,17 @@
 
 .data_block{
 	height: 120px;
-	margin: auto;	
+	margin: auto;
+	float: left;	
 }
 .house_data{
 	width: 95%;
 	PADDING: 5PX;
 	border-bottom: solid 1px #eee;
+}
+
+ul{
+	list-style-type: none;
 }
 
 .house_icon{
@@ -116,7 +131,11 @@
 
 .house_details_list{
 	margin-top: -35px;
-	font-size: 1em;
+	
+}
+
+.details_list{
+	font-size: 0.8em;
 }
 
 #myModal{
