@@ -84,7 +84,8 @@ function drawMoreDots(){
             return (d && d['longitude'] + d['latitude'] +d["max_generated"])
         })
       
-        bound.enter().append("circle")
+        bound.enter()
+            .append("circle")
             .attr("r", function(d) {
                 return +d["max_generated"]
             })
