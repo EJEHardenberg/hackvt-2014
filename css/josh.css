@@ -7,6 +7,18 @@
 	padding: 5px;
 }
 
+.user_data{
+	height: 70%;
+	width: 95%;
+	background: #fff;
+	margin: auto;
+	position: relative;
+	z-index: 90;
+	border: solid 1px #ccc;
+	margin-top: -20px;
+
+}
+
 .user_profile_spacer{
 	width: 9%;
 	display:inline-block;
@@ -23,6 +35,8 @@
 .profile_img{
 	width:90px;
 	margin-right: 15px;
+	position: relative;
+	z-index: 100;
 }	
 
 .profile_title{
