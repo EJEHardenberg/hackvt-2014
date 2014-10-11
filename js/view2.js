@@ -27,7 +27,7 @@ function drawDots(){
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
         var houses = d3.select("#svgmap").append("g")
             .attr("id","avghouseg")
-        var bound = houses.selectAll("circle").data(data, function(d){
+        var bound = houses.selectAll("circle").data(data    , function(d){
             return( d && d['longitude'] + d['latitude'] +d["max_consumed"]) 
         })
         bound.enter()
@@ -79,11 +79,12 @@ function drawMoreDots(){
     var houses = d3.select("#svgmap").append("g")
         .attr("id", "avghouse2")
     d3.csv("MonthlyAvgHouse.csv", function(error, data) {
+
         var bound = houses.selectAll("circle").data(data, function(d){
             return (d && d['longitude'] + d['latitude'] +d["max_generated"])
         })
       
-        bound.append("circle")
+        bound.enter().append("circle")
             .attr("r", function(d) {
                 return +d["max_generated"]
             })
@@ -92,12 +93,10 @@ function drawMoreDots(){
             })
             .attr("cy", function(d) {
                 return projection([+d["longitude"], +d["latitude"]])[1]
-            })/*
+            })
             .attr("transform", function(d){
-                var cx = d3.select(this).attr("cx")
-                var cy = d3.select(this).attr("cy")
-                return "translate(" + (cx*zoomVar.xAdj) +","+ (cy*zoomVar.yAdj)+")"
-            })*/
+                return "translate(155,185)"
+            })
             .style('fill','url(#gradient2)')
     })
 }
