@@ -149,7 +149,7 @@
             paths.style("fill", function(d){
                     if(d && d.properties){
                         var dTown = d.properties.town
-                        if( dTown.toLowerCase().indexOf(dTown.toLowerCase()) == -1){
+                        if( dTown.toLowerCase().indexOf(townName.toLowerCase()) == -1){
                             return '#eee'
                         }else{
                             return '#f00'
